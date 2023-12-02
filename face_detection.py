@@ -21,6 +21,7 @@ def get_face_of_frame(video, frame, face_model):
     if face is None:
         return None
 
+    # apply 3d template model to face
     face.apply(face_model, video)
     return face
 
@@ -40,13 +41,16 @@ def process_video(video: Video, model_manager: ModelManager):
         if not success:
             break
 
+        # log current progress
         if count % 100 == 0 and count != 0:
             logging.info(predictor.predict(count))
 
+        # save the output every 1000 frames
         if count % 1000 == 0 and count != 0:
             exporter.save_face_data(False)
             exporter.save_meta_data(False)
 
+        # only process frames with n % 3 == 0
         if count % 3 != 0:
             count += 1
             continue
@@ -55,6 +59,8 @@ def process_video(video: Video, model_manager: ModelManager):
         exporter.save_frame(frame=frame, frame_number=count, timestamp=timestamp_frame)
         for face_model in model_manager.face_models:
             frame_for_face = frame.copy()
+
+            # detect face with face model
             face = get_face_of_frame(
                 video=video, frame=frame_for_face, face_model=face_model
             )
@@ -70,6 +76,8 @@ def process_video(video: Video, model_manager: ModelManager):
 
         count += 1
     video.video_capture.release()
+
+    # save the output files
     exporter.save_face_data(True)
     exporter.save_meta_data(True)
     logging.info("Done.")

@@ -14,10 +14,7 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-THRESHOLD = .2
-
-THRESHOLD_BOUNDING_BOX = [(-THRESHOLD / 2, 0), (THRESHOLD / 2, THRESHOLD)]
-
+# ideal mapping for size and position of the threshold
 MAPPING = {
     "dlib": {
         "eth-gaze": {
@@ -59,6 +56,7 @@ MAPPING = {
 
 
 
+#check if intersection point is inside the area on camera plane
 def is_point_inside_threshold(intersection: numpy.array, threshold, position_threshold):
     x = intersection[0]
     y = intersection[1]
@@ -68,10 +66,10 @@ def is_point_inside_threshold(intersection: numpy.array, threshold, position_thr
     min_y = -position_threshold
     max_y = threshold - position_threshold
 
-    # todo stimmt das????
     return min_x <= x <= max_x and min_y <= y <= max_y
 
 
+# process a video
 def process_video(video, model_manager):
     logging.info(f"Details: {str(video)}")
 
@@ -92,9 +90,11 @@ def process_video(video, model_manager):
         if count % 100 == 0 and count != 0:
             logging.info(predictor.predict(count))
 
+        # save results every 1000 frames
         if count % 1000 == 0 and count != 0:
             exporter.save_gaze_data(False)
 
+        # only process every 3rd frame
         if count % 3 != 0:
             count += 1
             continue
@@ -115,7 +115,11 @@ def process_video(video, model_manager):
 
 
             for gaze_model in model_manager.gaze_models:
+
+                # check if a face was detected during face detection
                 if face is None or not face.has_detected_face():
+
+                    # if not store an empty entry in file
                     exporter.save_gaze(
                         gaze_model_name=gaze_model.name,
                         face_model_name=face_exporter.face_model_name,
@@ -130,6 +134,7 @@ def process_video(video, model_manager):
                     continue
 
                 frame_for_gaze = frame.copy()
+                # predict the pitch and yaw angle as well as the corresponding 3d gaze vector with the current gaze model
                 prediction = gaze_model.detect_gaze(image=frame_for_gaze,
                                                     face=face, video=video,
                                                     face_model_name=face_model_name,
@@ -143,13 +148,18 @@ def process_video(video, model_manager):
 
                 r = -cz / gz
 
+                # calculate intersection of line from gaze vector and center face with plane of camera
                 intersection = numpy.array([cx + r * gx, cy + r * gy, 0], dtype="float")
 
                 threshold = MAPPING[face_model_name][gaze_model.name]["size"]
                 position = MAPPING[face_model_name][gaze_model.name]["position"]
 
+                # check if the intersection point is inside the given area
+                # if yes the person looks on the screen
+                # if not the person doesnt look on the screen
                 hit_threshold = is_point_inside_threshold(intersection, threshold, position)
 
+                # save results of gaze estimation
                 exporter.save_gaze(
                     gaze_model_name=gaze_model.name,
                     face_model_name=face_exporter.face_model_name,
