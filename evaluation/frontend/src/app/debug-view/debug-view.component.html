@@ -1,0 +1,56 @@
+<h1>{{getHeading()}}</h1>
+<div *ngIf="currentGaze !== undefined" class="gaze"> Pitch: {{radToDeg(currentGaze.pitch!)}} | Yaw:
+  {{radToDeg(currentGaze.yaw!)}} | x:
+  {{currentGaze.intersection!.x}} | y: {{currentGaze.intersection!.y}} </div>
+<div *ngIf="currentFace !== undefined" class="face"> {{radToDeg(currentFace.rotationVector!.x)}}
+  {{radToDeg(currentFace.rotationVector!.y)
+  }} {{radToDeg(currentFace.rotationVector!.z)}} | {{currentFace.distance }}</div>
+<div class="label">
+  {{currentLabelText}}
+</div>
+<div style="height: 100%; display: flex;">
+  <img id="image" [src]="getImageUrl()" alt="Screenshot of the estimation" style="height: 100%; width: auto;">
+  <app-scene [scene]="scene" style="width: 100%;"></app-scene>
+</div>
+
+
+<img *ngIf="currentFaceImage !== undefined" id="face-image" [src]="currentFaceImage"
+  alt="Screenshot of the estimation face" style="height: 20%; width: auto;">
+
+<button mat-fab color="primary" class="next-button" (click)="next()">
+  <mat-icon>arrow_forward</mat-icon>
+</button>
+
+<button *ngIf="showError()" mat-mini-fab color="warn" class="error">
+  <mat-icon>priority_high</mat-icon>
+</button>
+
+
+<button mat-fab color="primary" class="prev-button" (click)="previous()">
+  <mat-icon>arrow_backward</mat-icon>
+</button>
+
+<button mat-fab color="primary" class="play-button" (click)="toggle()">
+  <mat-icon>{{getIcon()}}</mat-icon>
+</button>
+
+<div class="settings">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Settings
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div>
+      <mat-slider min=".05" max=".5" step="0.01" value=".2">
+        <input matSliderThumb (input)="onChange($event)" [value]="threshold">
+      </mat-slider>
+    </div>
+    <div>
+      <mat-slider min="-0.1" max=".5" step="0.01" value="0">
+        <input matSliderThumb (input)="onChangePosition($event)" [value]="position">
+      </mat-slider>
+    </div>
+    <input matInput (change)="onInputChange($event)" pattern="[0-9]*" step="3" type="number" [value]="currentFrame">
+  </mat-expansion-panel>
+</div>

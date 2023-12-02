@@ -1,0 +1,26 @@
+<div style="height: 100vh; display: flex; flex-direction: column;">
+  <div style="flex: 1; overflow: auto;">
+    <div role="list" style="height: 100%; overflow: auto; display: flex; flex-direction: column;">
+      <div *ngFor="let dataSet of dataSets"
+        style=" padding-left: 10%; padding-right: 10%; margin-top: 8px; margin-bottom: 8px;">
+        <mat-card class="container">
+          <div>
+            <img class="image" [src]="getThumbnail(dataSet.name)" alt="Image">
+            <div class="content">
+              <mat-card-header>{{ dataSet.name }}</mat-card-header>
+              <mat-card-content>
+                <ul>
+                  <li *ngFor="let details of dataSet.details" style="cursor: pointer;"
+                    [routerLink]="getLink(dataSet.name, details)">
+                    {{ details.face }} / {{ details.gaze }} / <span style="color: chartreuse">{{ details.frames
+                      }}</span>
+                  </li>
+                </ul>
+              </mat-card-content>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

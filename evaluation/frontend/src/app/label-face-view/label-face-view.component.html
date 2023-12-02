@@ -1,0 +1,22 @@
+<h1>{{getHeading()}}</h1>
+<div class="container">
+  <div class="item">
+    <button class="button" style="background-color: red" (click)="post(0)">Schlecht</button>
+  </div>
+  <div class="image-container" *ngIf="currentFrame !== undefined">
+    <img [src]="getImage()" alt="Image to label">
+  </div>
+  <div class="item">
+    <button class="button" style="background-color: #32CD32" (click)="post(1)">Ok (auch halbwegs ok)</button>
+  </div>
+</div>
+
+<div class="controls">
+  <button mat-fab color="primary" (click)="previous()">
+    <mat-icon>arrow_backward</mat-icon>
+  </button>
+
+  <button mat-fab color="primary" (click)="post(2)">
+    <mat-icon>question_mark</mat-icon>
+  </button>
+</div>

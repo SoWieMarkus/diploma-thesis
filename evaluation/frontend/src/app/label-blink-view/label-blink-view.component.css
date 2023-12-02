@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.item {
+  flex: 1;
+  border: 1px solid #000;
+  /* Einfach zur Visualisierung der Grenzen hinzugefügt */
+}
+
+.button {
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* Verhindert das Überlaufen des Bilds aus dem Container */
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  /* Hier können Sie die gewünschte horizontale Positionierung festlegen */
+  z-index: 100;
+  left: 50%;
+  /* Move the heading right by 50% of its own width */
+  transform: translate(-50%, 0%);
+}
+
+h1 {
+  position: absolute;
+  /* Set the heading to absolute position */
+  top: 5px;
+  /* Move the heading down by 50% of its own height */
+  left: 50%;
+  /* Move the heading right by 50% of its own width */
+  transform: translate(-50%, 0%);
+  /* Center the heading both horizontally and vertically */
+  text-align: center;
+  font-size: 24px;
+  /* Adjust the font size as needed */
+}
+
+
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}

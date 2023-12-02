@@ -1,0 +1,30 @@
+<mat-progress-bar style="position: absolute; z-index: 10000;" mode="determinate" [value]="getProgress()"
+  *ngIf="labels !== undefined"></mat-progress-bar>
+<div *ngIf="labels!==undefined" style="position: absolute; top:10px; z-index: 10000;">{{labels.details.done}} /
+  {{labels.details.total}}
+</div>
+
+<div style=" height: 100vh; display: flex; flex-direction: column;" *ngIf="labels !== undefined">
+  <div style="flex: 1; overflow: auto;">
+    <div role="list" style="height: 100%; overflow: auto; display: flex; flex-direction: column;">
+      <div *ngFor="let dataSet of labels.links"
+        style=" padding-left: 10%; padding-right: 10%; margin-top: 8px; margin-bottom: 8px;">
+        <mat-card class="container" style="cursor: pointer;" (click)="redirect(dataSet.redirect)"
+          [style.opacity]="getOpacity(dataSet)">
+          <div>
+            <div class="content">
+              <mat-card-header>
+                <h2 [style.color]="getHeaderColor(dataSet)">{{ dataSet.video }} / {{getType(dataSet)}}</h2>
+              </mat-card-header>
+              <mat-card-content>
+                <div>
+                  {{dataSet.done}} / {{dataSet.size}} ({{dataSet.missing}} fehlen)
+                </div>
+              </mat-card-content>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

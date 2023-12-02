@@ -1,0 +1,17 @@
+<mat-sidenav-container autosize="false" [hasBackdrop]="false">
+  <mat-sidenav mode="side" [opened]="getShowing()" class="left">
+    <div style="width: 291px">
+      <div *ngFor="let dataSet of dataSets" [routerLink]="dataSet.name" style="cursor: pointer;">
+        {{dataSet.name }}
+        <ul>
+          <li *ngFor="let details of dataSet.details" style="cursor: pointer;"
+            [routerLink]="getLink(dataSet.name, details)">
+            {{details.face}} / {{details.gaze}} / <span style="color:chartreuse">{{details.frames}}</span> </li>
+        </ul>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content #content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

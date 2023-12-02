@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "start": "npm run build:angular && npm run start:server",
+        "build:angular": "cd frontend && npm i && ng build",
+        "start:server": "cd backend && npm i && npm run start"
+    }
+}

@@ -1,0 +1,6 @@
+img {
+  width: 100px;
+  /* Make the image as tall as its parent container (header) */
+  margin-right: 16px;
+  /* Add some margin between the image and the header/content */
+}
