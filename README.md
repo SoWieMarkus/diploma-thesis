@@ -37,4 +37,4 @@ Dann gehe auf `localhost:4200/labels`
 Dort siehst du eine Übersicht über deine Videos und die Ground Truths die erstellt werden müssen.
 Arbeite alle ab.
 
-Im Anschluss kannst du die evaluation mit dem `evaluate.py` Skript durchführen.
+Im Anschluss kannst du die Evaluation mit dem `evaluate.py` Skript durchführen.
