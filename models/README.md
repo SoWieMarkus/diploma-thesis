@@ -1,6 +1,4 @@
-Quelle:
+Die 3D Template Face Models stammen aus der pt-gaze Python Bibliothek.
 
-Die pretrained models von mpiifacegaze, mpiigaze und eth-xgaze werden von xyz gezogen.
-Von dort stammen auch die Template Models 3d von media pipe und dlib, welche in den dateien zu finden sind
-
-TODO:
+68 Landmarks: https://github.com/hysts/pytorch_mpiigaze_demo/blob/master/ptgaze/common/face_model_68.py
+468 Landmarks: https://github.com/hysts/pytorch_mpiigaze_demo/blob/master/ptgaze/common/face_model_mediapipe.py

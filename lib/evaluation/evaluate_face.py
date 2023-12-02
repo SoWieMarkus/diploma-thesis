@@ -299,25 +299,25 @@ def evaluate_face(video_path, distances_map, total_count_labels, missing, result
         #print(f"Average distance: {average_distance}")
 
         draw_scatter_plot(distances_x, distances, distance_colors, f'Distanz | Video {video_name} | {face_model_name}',
-                          "Frame", "Distanz", f"./src/plots/{video_name}_{face_model_name}_distance-average.png", True,
+                          "Frame", "Distanz", f"./plots/{video_name}_{face_model_name}_distance-average.png", True,
                           (0, 1), xlim=None)
 
         draw_scatter_plot(meta_x, meta_contrast, meta_color, f'Kontrast | Video {video_name} | {face_model_name}',
-                          "Frame", "Kontrast", f"./src/plots/{video_name}_{face_model_name}_contrast-average.png", True,
+                          "Frame", "Kontrast", f"./plots/{video_name}_{face_model_name}_contrast-average.png", True,
                           None, xlim=None)
         draw_scatter_plot(meta_x, meta_brightness, meta_color,
                           f'Helligkeit | Video {video_name} | {face_model_name}',
-                          "Frame", "Helligkeit", f"./src/plots/{video_name}_{face_model_name}_brightness-average.png",
+                          "Frame", "Helligkeit", f"./plots/{video_name}_{face_model_name}_brightness-average.png",
                           True,
                           (0,100), xlim=None)
         draw_scatter_plot(meta_x, meta_sharpness, meta_color, f'Schärfe | Video {video_name} | {face_model_name}',
-                          "Frame", "Schärfe", f"./src/plots/{video_name}_{face_model_name}_sharpness-average.png", True,
+                          "Frame", "Schärfe", f"./plots/{video_name}_{face_model_name}_sharpness-average.png", True,
                           None, xlim=None)
 
         count.append(labels_count)
 
         draw_gradient_plot(gradient_labels, f"{face_model_name} / Vergleich Gaze Labels", "Frames", "",
-                           f"./src/plots/{video_name}_{face_model_name}_labels.png",
+                           f"./plots/{video_name}_{face_model_name}_labels.png",
                            tick_labels=["Gaze", "Face Quality"],
                            ticks=[0.25, 0.75], divider=[0.5])
 
@@ -371,8 +371,8 @@ def evaluate_face(video_path, distances_map, total_count_labels, missing, result
     plt.ylabel("F1-Score")
     plt.title(f"Idealer EAR Grenzwert | Video {video_name}")
     plt.legend()
-    plt.savefig(f"./src/plots/{video_name}_f1-score-blink.jpg")
+    plt.savefig(f"./plots/{video_name}_f1-score-blink.jpg")
     plt.close()
 
     draw_bar_chart(VISUALIZATION_MAPPING, count, "Verteilung der Qualität", "Anzahl", ["green", "orange", "red", "black"],
-                   f"./src/plots/{video_name}_bar-quality.jpg")
+                   f"./plots/{video_name}_bar-quality.jpg")

@@ -405,10 +405,10 @@ def main():
 
     print(print_fn_fp_table(results_fp_fn_hits))
     # draw_scatter_plot(position_average["dlib"]["x"], position_average["dlib"]["y"], None,
-    #                  f'Position | Total', 'x', 'y', f"./src/plots/position-dlib_model.png",
+    #                  f'Position | Total', 'x', 'y', f"./plots/position-dlib_model.png",
     #                  show_average=False, ylim=(0, 1920), xlim=(0, 1080))
     # draw_scatter_plot(position_average["mediapipe"]["x"], position_average["dlib"]["y"], None,
-    #                  f'Position | Total', 'x', 'y', f"./src/plots/position-mp_model.png",
+    #                  f'Position | Total', 'x', 'y', f"./plots/position-mp_model.png",
     #                  show_average=False, ylim=(0, 1920), xlim=(0, 1080))
 
     for face, value in results_videos.items():
@@ -473,7 +473,7 @@ def main():
                         max_y = y_value
                         max_f1 = score
 
-            output = f"./src/plots/{face_key}-{gaze_key}-total-contour.jpg" if not use_blinks else f"./src/plots/{face_key}-{gaze_key}-total-contour-without-blink.jpg"
+            output = f"./plots/{face_key}-{gaze_key}-total-contour.jpg" if not use_blinks else f"./plots/{face_key}-{gaze_key}-total-contour-without-blink.jpg"
             draw_heat_map(X, Y, Z, max_x, max_y, max_f1, f"Parameter Zone | {face_key} | {gaze_key}", "Seitenlänge l",
                           "Verschiebung p",
                           output)
@@ -497,7 +497,7 @@ def main():
                         max_x = x_value
                         max_y = y_value
                         max_f1 = score
-            output = f"./src/plots/{face_key}-{gaze_key}-total-ignore-contour.jpg" if not use_blinks else f"./src/plots/{face_key}-{gaze_key}-total-ignore-contour-without-blink.jpg"
+            output = f"./plots/{face_key}-{gaze_key}-total-ignore-contour.jpg" if not use_blinks else f"./plots/{face_key}-{gaze_key}-total-ignore-contour-without-blink.jpg"
 
             draw_heat_map(X, Y, Z2, max_x, max_y, max_f1, f"Parameter Zone | Gefiltert | {face_key} | {gaze_key}",
                           "Seitenlänge l",
@@ -514,11 +514,11 @@ def main():
 
     # Titel hinzufügen
     plt.title(f'Distanz | Total | Relation zu Qualität')
-    plt.savefig(f"./src/plots/distance-total.png")
+    plt.savefig(f"./plots/distance-total.png")
     plt.close()
 
     draw_scatter_plot(distances_map["x"], distances_map["y"], distances_map["model"],
-                      f'Distanz | Total | Relation zu Modell', 'Frame', 'Distanz', f"./src/plots/distance_model.png",
+                      f'Distanz | Total | Relation zu Modell', 'Frame', 'Distanz', f"./plots/distance_model.png",
                       show_average=True, ylim=None, xlim=None)
     plt.scatter(distances_map["x"], distances_map["y"], color=distances_map["model"], marker='o', s=1)
     plt.xlabel('Frame')
@@ -526,14 +526,14 @@ def main():
 
     # Titel hinzufügen
     plt.title(f'Distanz | Total | Relation zu Modell')
-    plt.savefig(f"./src/plots/distance_model.png")
+    plt.savefig(f"./plots/distance_model.png")
     plt.close()
 
     print(results_gaze)
 
     draw_bar_chart(VISUALIZATION_MAPPING, [total_count_labels["dlib"], total_count_labels["mediapipe"]],
                    "Verteilung der Qualität", "Anzahl", ["green", "orange", "red", "black"],
-                   f"./src/plots/total-bar-quality.png")
+                   f"./plots/total-bar-quality.png")
 
     print(results_fp_fn_hits)
 

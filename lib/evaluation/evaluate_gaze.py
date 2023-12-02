@@ -423,7 +423,7 @@ def evaluate_gaze(video_path, results_total, f1_score_average, f1_score_average_
 
         draw_gradient_plot(gradient_labels + gradient_hits + gradient_face,
                            f"Video {video_name} | {gaze_model_name} | {face_model_name}", "Frames",
-                           "", f"./src/plots/{video_name}_{face_model_name}_{gaze_model_name}.jpg",
+                           "", f"./plots/{video_name}_{face_model_name}_{gaze_model_name}.jpg",
                            tick_labels=["Ground Truth Blickkontakt", "Vorhersage Blickkontakt", "Qualität Gesichtserkennung"],
                            ticks=[0.333 / 2, .333 / 2 + .333, .333 / 2 + .666], divider=[0.333, 0.666])
         gradien_plots[face_model_name].append(CombinedOverviewChartItem(f"{gaze_model_name} | {face_model_name}", gradient_labels + gradient_hits + gradient_face))
@@ -468,7 +468,7 @@ def evaluate_gaze(video_path, results_total, f1_score_average, f1_score_average_
                 if int(video_name) not in f1_score_average_ignore["ignore"]:
                     f1_score_average_ignore[face_model_name][gaze_model_name]["values"][j, i] += f1_score
         results_local_video_f1_score_with_params[face_model_name][gaze_model_name] = BestThreshold(max_f1, max_x, max_y)
-        output = f"./src/plots/{video_name}-{face_model_name}-{gaze_model_name}-contour.jpg" if not use_blinks else f"./src/plots/{video_name}-{face_model_name}-{gaze_model_name}-contour-without-blink.jpg"
+        output = f"./plots/{video_name}-{face_model_name}-{gaze_model_name}-contour.jpg" if not use_blinks else f"./plots/{video_name}-{face_model_name}-{gaze_model_name}-contour-without-blink.jpg"
         draw_heat_map(X, Y, Z, max_x, max_y, max_f1, f"Parameter Zone | Video {video_name} | {face_model_name} | {gaze_model_name}",
                       "Seitenlänge l", "Verschiebung p", output)
 
@@ -484,8 +484,8 @@ def evaluate_gaze(video_path, results_total, f1_score_average, f1_score_average_
     for plot in plots:
         plt.plot(plot[0], plot[1], label=plot[2])
 
-    draw_combined_gradient_plot(gradien_plots["dlib"], f"./src/plots/{video_name}-dlib-overview-gaze.jpg")
-    draw_combined_gradient_plot(gradien_plots["mediapipe"], f"./src/plots/{video_name}-mediapipe-overview-gaze.jpg")
+    draw_combined_gradient_plot(gradien_plots["dlib"], f"./plots/{video_name}-dlib-overview-gaze.jpg")
+    draw_combined_gradient_plot(gradien_plots["mediapipe"], f"./plots/{video_name}-mediapipe-overview-gaze.jpg")
 
     dlib_mpii = best_f1_score_results["dlib"]["mpiifacegaze"]
     dlib_gaze360 = best_f1_score_results["dlib"]["l2cs-gaze-360"]
@@ -523,7 +523,7 @@ def evaluate_gaze(video_path, results_total, f1_score_average, f1_score_average_
     plt.ylabel("F1-Score")
     plt.title(f"Video {video_name}")
     plt.legend()
-    plt.savefig(f"./src/plots/{video_name}_f1-score-gaze.jpg")
+    plt.savefig(f"./plots/{video_name}_f1-score-gaze.jpg")
     plt.close()
 
     appendix_figure_f1_score_blink = get_figure_string(f"appendix/{video_name}_f1-score-blink.jpg",
