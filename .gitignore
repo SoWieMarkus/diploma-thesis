@@ -1,11 +1,12 @@
 
 !*.gitkeep
 
+venv
+
 data
 
 input
-output
-plots
+
 
 evaluation/backend/build
 
