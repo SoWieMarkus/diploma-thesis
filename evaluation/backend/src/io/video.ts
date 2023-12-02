@@ -20,8 +20,6 @@ export class Video {
     constructor(private directory: Directory) {
         this.faceDetectionResults = this.readFaceData();
         this.gazeDetectionResults = this.readGazeData();
-
-        // TODO merge
     }
 
     private readFaceData() {

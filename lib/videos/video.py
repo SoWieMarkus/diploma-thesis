@@ -30,7 +30,6 @@ class Video:
             dtype="double",
         )
 
-        # todo 5
         self.distortion_coefficients = numpy.zeros((4, 1))
 
         aspect_ratio = fractions.Fraction(int(self.width), int(self.height))

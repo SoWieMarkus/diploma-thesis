@@ -4,7 +4,6 @@ import { LabelManager } from "../label";
 
 export const router = express.Router();
 
-// TODO make singleton
 const videoManager = new VideoManager();
 const labelManger = LabelManager.getInstance();
 

@@ -30,9 +30,6 @@ class GazeFrameData:
         return GazeFrameData(frame_number=frame_number, timestamp=timestamp, pitch=pitch, yaw=yaw, vector=vector,
                              intersection=intersection, hit=hit)
 
-    #TODO brauche ich das? def __str__(self):
-    #    return f"{self.index},{vector_to_string(self.landmark_3d)},{str(self.landmark)}"
-
     def export(self):
         content = [str(self.frame_number), str(self.timestamp)]
 

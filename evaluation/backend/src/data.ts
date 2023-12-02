@@ -156,7 +156,7 @@ class DataSet {
 
 
         if (this.hasLabels()) {
-            // TODO read labels
+
         }
     }
 
