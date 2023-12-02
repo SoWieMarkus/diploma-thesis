@@ -31,4 +31,10 @@ in meiner Diplomarbeit erklärt.
 
 In diesen Dateien ist dann die Vorhersage ob die Person sieht oder nicht, basierend auf der in meiner Diplomarbeit modellierten Zone aufgeführt.
 
-TODO
+Wenn du für deine Videos eine Evaluation wie in meiner Diplomarbeit durchführen möchtest, muss zunächst eine Ground Truth erstellt werden.
+Dafür kann das Evaluationstool verwendet werden. Siehe die README in `./evaluation`.
+Dann gehe auf `localhost:4200/labels`
+Dort siehst du eine Übersicht über deine Videos und die Ground Truths die erstellt werden müssen.
+Arbeite alle ab.
+
+Im Anschluss kannst du die evaluation mit dem `evaluate.py` Skript durchführen.
