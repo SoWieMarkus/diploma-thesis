@@ -5,14 +5,15 @@ venv
 
 data
 
-input
+
 plots
 output
+input
+models
 
 
 evaluation/backend/build
 
-/models
 .zip
 
 !utils/models
