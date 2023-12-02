@@ -12,7 +12,10 @@ einfach weitere Videoformate hinzufügen, indem in der `VideoManager` Klasse das
 Liste `video_extensions` hinzugefügt wird.
 
 Anschließend kann die Blickrichtungsbestimmung mit dem `main.py` Skript ausgeführt werden.
-Dabei werden zu Beginn alle benötigten Modelle heruntergeladen. Sollte die Verarbeitung mit l2cs-gaze-360 fehlschlagen,
+Dabei werden zu Beginn alle benötigten Modelle heruntergeladen. 
+
+
+ACHTUNG WICHTIG ACHTUNG HIER! Sollte die Verarbeitung mit l2cs-gaze-360 fehlschlagen,
 wurde der Download der Datei nicht richtig durchgeführt. In diesem Fall muss die Datei von L2CS-net manuell unter
 folgender URL heruntergeladen werden:
 https://drive.google.com/uc?id=18S956r4jnHtSeT8z8t3z8AoJZjVnNqPJ&export=download
