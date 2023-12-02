@@ -6,6 +6,8 @@ venv
 data
 
 input
+plots
+output
 
 
 evaluation/backend/build
