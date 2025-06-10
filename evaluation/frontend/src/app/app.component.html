@@ -1,7 +1,0 @@
-<app-sidebar>
-  <button *ngIf="showSidebar" mat-fab style="position: absolute" (click)="toggleSideBar()">
-    <mat-icon *ngIf="getShowing()">chevron_left</mat-icon>
-    <mat-icon *ngIf="!getShowing()">chevron_right</mat-icon>
-  </button>
-  <router-outlet #labelView></router-outlet>
-</app-sidebar>

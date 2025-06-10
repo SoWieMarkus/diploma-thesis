@@ -1,0 +1,91 @@
+\chapter{Fazit}\label{sec:fazit}
+
+\section{Ergebnisse}
+
+In dieser Arbeit wurden verschiedene Methoden zur Bestimmung der Blickrichtung von Radfahrenden anhand des Videostreams der Innenkamera eines Smartphones vorgestellt. Anhand dieser Blickrichtung wurde untersucht, wie gut man messen kann, zu welchen Zeitpunkten die Radfahrenden auf das Display ihres Smartphones sehen.
+
+\vspace{0.3cm}
+\noindent\textbf{Forschungsfrage 1} \textit{Was ist die beste Möglichkeit, nur mittels der Frontkamera eines mobilen Geräts die Blickrichtung der Nutzenden während der Fahrt zu verfolgen?}
+\vspace{0.3cm}
+
+In dieser Arbeit wurden verschiedene Möglichkeiten zur Bestimmung der Blickrichtung vorgestellt.
+
+Zuerst wurde untersucht, ob Deep Learning Appearance-Based Methoden, die Bildschirmkoordinaten vorhersagen können, für die Blickrichtungsbestimmung von Radfahrenden geeignet sind. Dabei wurde festgestellt, dass solche Modelle nicht in der Lage sind zu unterscheiden, ob eine Person auf den Bildschirm schaut oder nicht.
+
+Es wurden zwei Konzepte entwickelt. In beiden Konzepten wird zunächst das Gesicht einer Person im Bild erkannt. Dazu werden \mediapipe und \dlib verwendet. Anschließend wird die dreidimensionale Blickrichtung der Person anhand der Kopfdrehung der dargestellten Person und mithilfe von drei verschiedenen Convolutional Neural Networks bestimmt. Für das Training der Modelle werden die Datensätze \ethg \cite{paper:eth-xgaze}, \gazed \cite{paper:gaze360} und \mpii \cite{paper:mpiifacegaze} verwendet.
+
+Die Auswertung ergab, dass die besten Ergebnisse mit der Kombination von \mediapipe und \ethg erzielt wurden. Mit dieser Kombination wurde ein F1-Score von 0,928 erreicht. Mit der Kombination von \dlib und \ethg wurde ein F1-Score von 0,91 erreicht. Somit sind Deep Learning Appearance-Based Methoden auf Basis des \textit{ETH-XGaze} Datensatz am besten geeignet, um die Blickrichtung von Radfahrenden zu bestimmen. Für die Gesichtserkennung ist die Empfehlung, \mediapipe zu verwenden. 
+
+Es ist jedoch anzumerken, dass auch das Konzept zur Bestimmung der Blickrichtung anhand der Kopfdrehung gute Ergebnisse erzielte (F1-Score von 0,833).
+
+\vspace{0.3cm}
+\noindent\textbf{Forschungsfrage 2} \textit{Wie präzise lässt sich mit der Frontkamera eines Smartphones, welches am Lenker eines Fahrrads befestigt ist, bestimmen, zu welchen Zeitpunkten eine Person während der Fahrt auf das Smartphone sieht?}
+\vspace{0.3cm}
+
+Für die Interpretation der Blickrichtung des Radfahrenden wird eine Ebene $\cameraplane$ definiert, auf der sich sowohl die Kamera als auch das Display des Smartphones befinden. Das Display des Smartphones wird dabei durch eine Zone modelliert, die durch eine Seitenlänge $\hitthresholdsize$ und einen Versatz $\hitthresholdposition$ beschrieben werden kann. Aus der dreidimensionalen Position des Kopfes relativ zur Kamera und dem ermittelten Blickrichtungsvektor wird eine Gerade konstruiert, die die Ebene $\cameraplane$ im Punkt $\intersection$ schneidet. Liegt dieser Schnittpunkt innerhalb des vom Smartphone repräsentierten Bereichs, so wird angenommen, dass die Person auf das Smartphone schaut. 
+
+Während der Evaluation wurden die idealen Parameter $\hitthresholdsize$ und $\hitthresholdposition$ anhand der aufgezeichneten Videos ermittelt. Mit diesen Parametern konnte mit der Blickrichtungsbestimmung mit \ethg und der Gesichtserkennung mit \mediapipe ein F1-Score von 0,928 erreicht werden. Kalibriert man die Werte für jedes Video einzeln, können fast perfekte Werte erzielt werden. Eine genaue Auflistung dieser Werte für die einzelnen Videos ist im Anhang der Arbeit zu finden.
+
+\vspace{0.3cm}
+\noindent\textbf{Forschungsfrage 3} \textit{Welche technischen Hürden sind zu überwinden, um eine Blickrichtungserkennung mittels Smartphones auf einem Fahrrad zu entwickeln?}
+\vspace{0.3cm}
+
+Für die derzeitige Umsetzung der Konzepte müssen Videos von Radfahrenden während der Fahrt aufgenommen werden. Für jedes Bild des Videos muss dann ein Gesicht sowie die dreidimensionale Position des Gesichts relativ zur Kamera bestimmt werden. Für die Erkennung von Gesichtern und Gesichtsmerkmalen werden Algorithmen verwendet, die für den Einsatz auf Smartphones optimiert sind. Um auf die dreidimensionale Position des Kopfes zu schließen, wurde das \textit{Pose Computation Problem} \cite{paper:pose:problem} gelöst. Zur genauen Bestimmung dieser Position werden die im Kapitel \ref{sec:implementation:face:3d} vorgestellten intrinsischen Kameraparameter benötigt. Da diese für jede verwendete Kamera durch einen Kalibrierungsprozess ermittelt werden müssen, wurden sie im Rahmen dieser Arbeit geschätzt. Dabei ist zu beachten, dass durch die Schätzung der Kameraparameter die Ergebnisse nicht so genau sind wie mit ermittelten Kameraparametern. Mithilfe der intrinsischen Kameraparameter und eines dreidimensionalen Template-Modells eines Kopfes wurden dann ein Rotations- und ein Translationsvektor bestimmt, die zur Berechnung der dreidimensionalen Position jedes erkannten Gesichts verwendet werden können. 
+Im nächsten Schritt wurde eine Blickrichtungsbestimmung mit den beiden vorgestellten Konzepten auf Basis der erkannten Gesichter implementiert. Wie bereits erwähnt, musste für die Interpretation der so ermittelten Blickrichtung ein idealer Bereich auf der Ebene $\cameraplane$ gefunden werden. Dazu wurde ein Hyperparameter-Tuning durchgeführt.
+
+\vspace{0.3cm}
+\noindent\textbf{Forschungsfrage 4} \textit{Wie kann die Qualität der aufgezeichneten Daten maximiert und Fehler minimiert werden?}
+\vspace{0.3cm}
+
+Um die Qualität der Daten zu maximieren, wurde zunächst experimentiert, mit welchen Konfigurationen der Gesichtserkennungsmethoden eine robuste Gesichtserkennung möglich ist. Eine genaue Evaluierung dieser Konfigurationen konnte im Rahmen dieser Arbeit nicht durchgeführt werden, da die Qualitätsbewertung ein sehr zeitaufwändiger Prozess ist.
+
+Weiterhin wurde untersucht, ob eine Aussage darüber getroffen werden kann, ob die Person auf ihr Smartphone schaut, wenn kein Gesicht erkannt wurde. Es konnte gezeigt werden, dass in solchen Fällen fast ausschließlich nicht auf das Smartphone geschaut wird. Somit kann auch für Lücken in der Gesichtserkennung eine Aussage getroffen werden.
+
+Bei näherer Betrachtung der mit \dlib erkannten Gesichter wurde deutlich, dass mit dieser Methode aufgrund der gemessenen Distanz zwischen dem Kopf des Radfahrenden und der Kamera schlecht erkannte Gesichter detektiert werden können. Die Datenqualität konnte durch das Aussortieren dieser Gesichter weiter verbessert werden.
+
+Außerdem wurde festgestellt, dass Sonnenbrillen und Nachtfahrten die Gesichtserkennung erheblich beeinträchtigen. Um optimale Ergebnisse während einer Studie zu erzielen, sollte daher auf das Tragen von Sonnenbrillen während der Fahrt verzichtet werden. Außerdem sollten Nachtfahrten vermieden werden.
+
+Die Auswertung zeigte auch, dass die Erkennung geschlossener Augen die Ergebnisse der Blickrichtungsbestimmung verbessern kann. Leider konnte der in dieser Arbeit verwendete Ansatz zur Erkennung geschlossener Augen diese Bilder nicht zuverlässig erkennen.
+
+\vspace{0.3cm}
+\noindent\textbf{Forschungsfrage 5} \textit{
+Wie gut können die genannten Umwelteinflüsse (Licht, Erschütterungen) kompensiert werden?}
+\vspace{0.3cm}
+
+Für die Auswertung der Arbeit wurden Videos von Radfahrern in verschiedenen Situationen aufgenommen. Bei der Auswertung der Gesichtserkennung wurde vor allem eine starke Kopfdrehung als Ursache für nicht erkannte Gesichter identifiziert. Normale Umwelteinflüsse konnten bei der Gesichtserkennung gut kompensiert werden. Die Umgebungsbedingungen wurden nur in extremen Fällen zum Problem. So konnten bei Nachtaufnahmen sowie bei Aufnahmen, bei denen die Sonne im Rücken der Radfahrenden stand, keine Gesichter erkannt werden. Erschütterungen, die die Qualität der Videos beeinträchtigten, konnten ohne weitere Auffälligkeiten verarbeitet werden.
+
+Bei der anschließenden Blickrichtungsbestimmung konnten die Umwelteinflüsse in der Regel gut kompensiert werden. Auch hier gab es keine Auffälligkeiten bei den Videos mit Erschütterungen und normalen Umwelteinflüssen. Da die Blickrichtungsbestimmung auf den Ergebnissen der Gesichtserkennung aufbaut, wurden bei den Nachtvideos schlechtere Ergebnisse erzielt. Für das Video, in dem die Sonne direkt im Rücken der Person zu sehen ist (Video 14), konnte trotz fehlender Gesichtserkennung mit der Kombination aus \mediapipe und \ethg ein F1-Score von 0,925 erreicht werden.
+
+Zusammenfassend kann gesagt werden, dass normale Umwelteinflüsse durch die Implementierung kompensiert werden können.
+
+\vspace{0.3cm}
+\noindent\textbf{Forschungsfrage 6} \textit{Wie gut lässt sich die Messung durchführen, wenn Teile des Gesichts der Person verdeckt sind?}
+\vspace{0.3cm}
+
+Die Evaluation hat gezeigt, dass Sonnenbrillen für die Blickrichtungsbestimmung mit Convolutional Neural Networks nicht geeignet sind. Mit dem Konzept der Blickrichtungsbestimmung durch Kopfdrehung konnten jedoch auch mit Sonnenbrillen gute Ergebnisse erzielt werden. Dennoch ist es ratsam, im Rahmen einer Studie auf Sonnenbrillen zu verzichten. Das Tragen einer normalen Brille beeinträchtigte die Ergebnisse der Blickrichtungsbestimmung nicht. Es traten jedoch teilweise Probleme bei der Gesichtserkennung auf, da der Brillenrahmen als Auge erkannt wurde. Dadurch wurde die zuverlässige Erkennung geschlossener Augen beeinträchtigt.
+
+\vspace{0.3cm}
+\noindent\textbf{Forschungsfrage 7} \textit{Welche Kalibrierungen müssen zwingend vorgenommen werden, damit das Eye-Tracking funktioniert?}
+\vspace{0.3cm}
+
+Wie bereits erwähnt, ist es notwendig, für eine ideale Bestimmung der dreidimensionalen Position des Kopfes relativ zur Kamera, die intrinsischen Kameraparameter zu bestimmen. Diese können mit einer Kalibrierung präzise bestimmt werden. Im Rahmen dieser Arbeit wurden jedoch auch mit geschätzen Kameraparametern gute Ergebnisse erzielt.
+
+Die Ergebnisse basieren auf den Parametern $\hitthresholdsize$ und $\hitthresholdposition$, die im Rahmen dieser Arbeit kalibriert wurden. Diese Parameter wurden hauptsächlich anhand von Videos einer einzelnen Person bestimmt. Daher können die Parameter durch das Aussehen dieser Person beeinflusst worden sein, auch wenn versucht wurde, möglichst viele verschiedene Blickwinkel auf die Person zu zeigen. Im Rahmen dieser Arbeit konnten jedoch auch mit Videos anderer Personen gute Ergebnisse erzielt werden. Generell sollte jedoch darauf geachtet werden, dass die Person im Blickwinkel der Innenkamera des Smartphones gut zu sehen ist.  
+
+
+\section{Ausblick}
+
+Mit den Ergebnissen dieser Arbeit kann in zukünftigen Studien im Rahmen der PrioBike-App gemessen werden, zu welchen Zeitpunkten eine Person auf das Smartphone schaut. Damit können unter anderem die in der Arbeit von Pickhardt \cite{diplom:paul:pickhardt} vorgestellten multimodalen Interaktionskonzepte der App evaluiert werden. Darüber hinaus können durch die Analyse des Blickverhaltens der Radfahrenden potentiell ablenkende Ansichten in der App identifiziert werden. Insgesamt kann mit dieser Arbeit ein wichtiger Beitrag zur sicheren Nutzung der PrioBike-App geleistet werden.
+
+Im Rahmen dieser Arbeit konnte gezeigt werden, dass die Ergebnisse der Blickrichtungsbestimmung verbessert werden können, wenn Bilder mit geschlossenen Augen bei der Betrachtung ausgeschlossen werden. Ein möglicher Ansatz zur Erkennung geschlossener Augen wurde vorgestellt, konnte jedoch keine zuverlässigen Ergebnisse liefern. Zur Optimierung des Verfahrens könnten daher weitere Untersuchungen durchgeführt werden, wie eine robuste Erkennung geschlossener Augen ermöglicht werden kann.
+
+In dieser Arbeit wurden hauptsächlich Gesichtserkennungsmethoden verwendet, die für den Einsatz auf mobilen Geräten optimiert wurden. Weitere Methoden konnten im zeitlichen Rahmen dieser Arbeit nicht getestet werden. Die Evaluation hat gezeigt, dass die verwendeten Verfahren Schwierigkeiten haben, ein Gesicht bei einer hohen Rotation des Kopfes um die Querachse zu erkennen. Die allgemeinen Ergebnisse der Erkennung von Blicken auf das Smartphone-Display wurden dadurch nicht beeinträchtigt. Dennoch könnten andere Methoden zur Gesichtserkennung untersucht werden, wie sie unter anderem von Khabarlak et al. in ihrer Arbeit \cite{paper:face:survey} vorgestellt wurden. 
+
+Weiter konnte gezeigt werden, dass die Kalibrierung der Zone für ein einzelnes Video nahezu perfekte Ergebnisse für dieses Video ermöglicht hat. Im Rahmen dieser Arbeit wurde nicht untersucht, ob es möglich ist, vor Fahrtbeginn diese Zone speziell für eine Person zu kalibrieren. Wenn eine solche Methode gefunden werden kann, könnte dadurch die Qualität der Vorhersage weiter verbessert werden.
+
+Im Rahmen dieser Arbeit wurde die Erkennung von zweidimensionalen Bildschirmkoordinaten nicht weiter verfolgt, da mit diesen Ansätzen nicht unterschieden werden kann, ob die Person auf das Smartphone schaut oder nicht. Da in dieser Arbeit jedoch ein Verfahren vorgestellt wurde, mit dem Blicke auf das Smartphone detektiert werden können, könnte in diesen Fällen ein solches Modell verwendet werden, um genauer zu untersuchen, auf welchen Bereich des Displays eine Person schaut.
+
+Während einer Fahrt mit der PrioBike-App werden noch viele weitere Daten gesammelt, z.B. über die Geschwindigkeit und die gefahrene Strecke. Diese Daten könnten genutzt werden, um das Konzept zu erweitern, indem z.B. je nach Anwendungsfall Passagen ignoriert werden, in denen die Person nicht fährt, sondern steht.
+
+
+
