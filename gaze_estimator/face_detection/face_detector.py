@@ -63,7 +63,7 @@ class FaceTemplateModel(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_nose_tip_index(self) -> numpy.array:
+    def get_nose_tip_index(self) -> int:
         """Get the index of the nose tip landmark in the template model."""
         raise NotImplementedError()
 
