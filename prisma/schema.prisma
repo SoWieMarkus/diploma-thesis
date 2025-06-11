@@ -21,41 +21,38 @@ model Video {
 }
 
 model Frame {
-  id      String @id @default(uuid())
-  videoId String
-  index   Int
-  timestamp Date
-
-  dlibFaceId      String? @unique
-  dlibFace        Face?   @relation("DlibFace", fields: [dlibFaceId], references: [id]) // If not set no face was detected
-  mediapipeFaceId String? @unique
-  mediapipeFace   Face?   @relation("MediapipeFace", fields: [mediapipeFaceId], references: [id]) // If not set no face was detected
-
-  video      Video @relation(fields: [videoId], references: [id])
-  looksLabel Int? // 0 = Person is not looking at the device, 1 = Person is looking at the device, 2 = Eyes or face of the person are not visible in the image
-  blinkLabel Int? // 0 = Eyes closed, 1 = Eyes open, 2 = Eyes not detectable
+  id              String   @id @default(uuid())
+  videoId         String
+  index           Int
+  timestamp       DateTime
+  dlibFaceId      String?  @unique
+  dlibFace        Face?    @relation("DlibFace", fields: [dlibFaceId], references: [id]) // If not set no face was detected
+  mediapipeFaceId String?  @unique
+  mediapipeFace   Face?    @relation("MediapipeFace", fields: [mediapipeFaceId], references: [id]) // If not set no face was detected
+  video           Video    @relation(fields: [videoId], references: [id])
+  looksLabel      Int? // 0 = Person is not looking at the device, 1 = Person is looking at the device, 2 = Eyes or face of the person are not visible in the image
+  blinkLabel      Int? // 0 = Eyes closed, 1 = Eyes open, 2 = Eyes not detectable
 
   @@unique([videoId, index])
 }
 
 model Face {
-  id             String @id @default(uuid())
-  dlibFrame      Frame? @relation("DlibFace")
-  mediapipeFrame Frame? @relation("MediapipeFace")
+  id             String  @id @default(uuid())
+  dlibFrame      Frame?  @relation("DlibFace")
+  mediapipeFrame Frame?  @relation("MediapipeFace")
   qualityLabel   Int? // 0 = Poor quality, 1 = Medium quality, 2 = Good quality
   distance       Float
   position       String
   center         String
   earLeft        Float
   earRight       Float
-
-  ethXGaze      Gaze?   @relation("EthXGaze", fields: [ethXGazeId], references: [id])
-  ethXGazeId    String? @unique
-  gaze360       Gaze?   @relation("Gaze360", fields: [gaze360Id], references: [id])
-  gaze360Id     String? @unique
-  headRotation  Gaze?   @relation("HeadRotation", fields: [headRotationId], references: [id])
+  ethXGaze       Gaze?   @relation("EthXGaze", fields: [ethXGazeId], references: [id])
+  ethXGazeId     String? @unique
+  gaze360        Gaze?   @relation("Gaze360", fields: [gaze360Id], references: [id])
+  gaze360Id      String? @unique
+  headRotation   Gaze?   @relation("HeadRotation", fields: [headRotationId], references: [id])
   headRotationId String? @unique
-  mpiifacegaze  Gaze?   @relation("MPIIFaceGaze", fields: [mpiifacegazeId], references: [id])
+  mpiifacegaze   Gaze?   @relation("MPIIFaceGaze", fields: [mpiifacegazeId], references: [id])
   mpiifacegazeId String? @unique
 
   // The vectors are stored as "<x>,<y>,<z>"
@@ -66,23 +63,31 @@ model Face {
 
   // I did that to speed up the queries
   // Also I decided to not store all the landmarks anymore as I did during my thesis to optimize the size of the database
-  rotationVector String
-  landmarkLeftEyeLeft String
-  landmarkLeftEyeRight String
-  landmarkRightEyeLeft String
+  rotationVector        String
+  landmarkLeftEyeLeft   String
+  landmarkLeftEyeRight  String
+  landmarkRightEyeLeft  String
   landmarkRightEyeRight String
-  landmarkMouthLeft String
-  landmarkMouthRight String
-  landmarkNoseLeft String
-  landmarkNoseRight String
-  landmarkNoseTip String
+  landmarkMouthLeft     String
+  landmarkMouthRight    String
+  landmarkNoseLeft      String
+  landmarkNoseRight     String
+  landmarkNoseTip       String
 }
 
 model Gaze {
-  id      String @id @default(uuid())
-  pitch Float
-  yaw Float
+  id                 String  @id @default(uuid())
+  pitch              Float
+  yaw                Float
   // The vectors are stored as "<x>,<y>,<z>"
-  direction String
-  intersection String
+  direction          String
+  intersection       String
+  mpiifacegazeFaceId String? @unique
+  mpiifacegazeFace   Face?   @relation(fields: [faceId], references: [id])
+  ethXGazeFaceId     String? @unique
+  ethXGazeFace       Face?   @relation(fields: [faceId], references: [id])
+  gaze360FaceId      String? @unique
+  gaze360Face        Face?   @relation(fields: [faceId], references: [id])
+  headRotationFaceId String? @unique
+  headRotationFace   Face?   @relation(fields: [faceId], references: [id])
 }
