@@ -55,8 +55,13 @@ def load_videos(directory: str) -> list[str]:
     ]
 
 
-def process_frame(frame: numpy.ndarray, meta: VideoCaptureMetaData) -> list[Face]:
-
+def process_frame(frame: numpy.ndarray, meta: VideoCaptureMetaData):
+    """
+    Process a single frame to detect faces and estimate gaze.
+    Args:
+        frame (numpy.ndarray): The image frame to process.
+        meta (VideoCaptureMetaData): Metadata about the video capture, such as resolution and frame rate.
+    """
     for face_detector in FACE_DETECTORS:
         face = face_detector.detect_face(frame, meta)
         # connect face to the frame
@@ -72,7 +77,7 @@ def process_frame(frame: numpy.ndarray, meta: VideoCaptureMetaData) -> list[Face
 
 def process_video(video_path: str, args: argparse.Namespace):
     """
-    Process a single video file and estimate gaze.
+    Process a single video file and estimate gaze of every frame.
     Args:
         video_path (str): Path to the video file to process.
         args (argparse.Namespace): Command line arguments.
@@ -90,10 +95,15 @@ def process_video(video_path: str, args: argparse.Namespace):
 
     # TODO delete the face detection and gaze detection from the video inside the database
     # TODO create video if it does not exist in the database
+    frame_count = 0
     while True:
         success, frame = video.video_capture.read()
         if not success:
+            logging.info(f"Finished processing video: {video_path}")
             break
+        frame_count += 1
+        if frame_count % args.frame_step != 0:
+            continue
         process_frame(frame, meta)
 
 
@@ -109,6 +119,12 @@ def main():
         "--output",
         type=str,
         help="Path to directory where the output will be saved",
+    )
+    parser.add_argument(
+        "--frame-step",
+        type=int,
+        help="Process every Nth frame (skip frames where frame_count %% N != 0)",
+        default=3,
     )
 
     args = parser.parse_args()
