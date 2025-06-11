@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "@gaze-visualization/frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
