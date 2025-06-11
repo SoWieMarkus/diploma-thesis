@@ -52,6 +52,11 @@ model Face {
   // TODO Add relation to ethxgaze, gaze360, headRotation & mpiifacegaze
 
   // The vectors are stored as "<x>,<y>,<z>"
+  // The landmarks are stored as "<norm_x>,<norm_y>,<norm_z>,<img_x>,<img_y>,<world_x>,<world_y>,<world_z>"
+  // "norm_" is the normalized image coordinate (plus the estimate depth from mediapipe as norm_z)
+  // "img_" is the position of the landmark in pixels
+  // "world_" is the estimated 3d position
+
   // I did that to speed up the queries
   // Also I decided to not store all the landmarks anymore as I did during my thesis to optimize the size of the database
   rotationVector String
