@@ -1,6 +1,8 @@
 - install python
 - install node.js and npm
 
+licence rausnehmen
+
 1. create .venv
 2. installiere requirements.txt
 
