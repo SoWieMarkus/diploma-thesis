@@ -1,10 +1,10 @@
-from gaze_estimator import estimate_gaze
 import argparse
 import os
 import logging
 import cv2
+import numpy
 
-from gaze_estimator.common.camera import get_meta_data_of_video
+from gaze_estimator.common.camera import get_meta_data_of_video, VideoCaptureMetaData
 from gaze_estimator.face_detection.dlib_face_detector import DlibFaceDetector
 from gaze_estimator.face_detection.face import Face
 from gaze_estimator.face_detection.mediapipe_face_detector import MediapipeFaceDetector
@@ -55,49 +55,46 @@ def load_videos(directory: str) -> list[str]:
     ]
 
 
-def process_videos(video_paths: list[str], args: argparse.Namespace):
-    """
-    Process each video file in the list and estimate gaze.
-    Args:
-        video_paths (list[str]): List of video file paths to process.
-    """
-    for video_path in video_paths:
-        logging.info(f"Processing video: {video_path}")
+def process_frame(frame: numpy.ndarray, meta: VideoCaptureMetaData) -> list[Face]:
 
-        video = cv2.VideoCapture(video_path)
-        if not video.isOpened():
-            logging.error(f"Could not open video file: {video}")
+    for face_detector in FACE_DETECTORS:
+        face = face_detector.detect_face(frame, meta)
+        # connect face to the frame
+        if face is None:
             continue
 
-        meta = get_meta_data_of_video(video)
+        # TODO save frame with detected face
+        for gaze_detector in GAZE_DETECTORS:
+            # TODO normalize image
+            # TODO save normalized image
+            gaze = gaze_detector.detect_gaze(face, frame)
 
-        # TODO delete the face detection and gaze detection from the video inside the database
-        # TODO create video if it does not exist in the database
-        while True:
-            success, frame = video.video_capture.read()
 
-            if not success:
-                break
+def process_video(video_path: str, args: argparse.Namespace):
+    """
+    Process a single video file and estimate gaze.
+    Args:
+        video_path (str): Path to the video file to process.
+        args (argparse.Namespace): Command line arguments.
+    """
+    logging.info(f"Processing video: {video_path}")
 
-            # TODO create frame in the database if it doesnt exist
-            # maybe cache and store afterwards with bulk insert
+    video = cv2.VideoCapture(video_path)
+    if not video.isOpened():
+        logging.error(f"Could not open video file: {video_path}")
+        return
 
-            for face_detector in FACE_DETECTORS:
-                face = face_detector.detect_face(frame, meta)
+    meta = get_meta_data_of_video(video)
 
-                # connect face to the frame
-                if face is None:
-                    continue
+    logging.info(f"Processing video: {video_path}")
 
-                # TODO save frame with detected face
-
-                
-                for gaze_detector in GAZE_DETECTORS:
-                    # TODO normalize image
-                    # TODO save normalized image
-                    gaze = gaze_detector.detect_gaze(face, frame)
-
-                    # TODO connect gaze to fhe face in the database
+    # TODO delete the face detection and gaze detection from the video inside the database
+    # TODO create video if it does not exist in the database
+    while True:
+        success, frame = video.video_capture.read()
+        if not success:
+            break
+        process_frame(frame, meta)
 
 
 def main():
@@ -115,10 +112,11 @@ def main():
     )
 
     args = parser.parse_args()
-    videos = load_videos(args.dir)
-    logging.info(f"Found {len(videos)} videos in {args.dir}")
+    video_paths = load_videos(args.dir)
+    logging.info(f"Found {len(video_paths)} videos in {args.dir}")
 
-    process_videos(videos, args)
+    for video_path in video_paths:
+        process_video(video_path, args)
 
 
 if __name__ == "__main__":
