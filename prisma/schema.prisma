@@ -49,7 +49,14 @@ model Face {
   earLeft        Float
   earRight       Float
 
-  // TODO Add relation to ethxgaze, gaze360, headRotation & mpiifacegaze
+  ethXGaze      Gaze?   @relation("EthXGaze", fields: [ethXGazeId], references: [id])
+  ethXGazeId    String? @unique
+  gaze360       Gaze?   @relation("Gaze360", fields: [gaze360Id], references: [id])
+  gaze360Id     String? @unique
+  headRotation  Gaze?   @relation("HeadRotation", fields: [headRotationId], references: [id])
+  headRotationId String? @unique
+  mpiifacegaze  Gaze?   @relation("MPIIFaceGaze", fields: [mpiifacegazeId], references: [id])
+  mpiifacegazeId String? @unique
 
   // The vectors are stored as "<x>,<y>,<z>"
   // The landmarks are stored as "<norm_x>,<norm_y>,<norm_z>,<img_x>,<img_y>,<world_x>,<world_y>,<world_z>"
