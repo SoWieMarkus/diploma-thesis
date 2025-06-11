@@ -89,7 +89,12 @@ def process_videos(video_paths: list[str], args: argparse.Namespace):
                 if face is None:
                     continue
 
+                # TODO save frame with detected face
+
+                
                 for gaze_detector in GAZE_DETECTORS:
+                    # TODO normalize image
+                    # TODO save normalized image
                     gaze = gaze_detector.detect_gaze(face, frame)
 
                     # TODO connect gaze to fhe face in the database
