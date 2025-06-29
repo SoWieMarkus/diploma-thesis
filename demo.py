@@ -80,7 +80,6 @@ def demo(
 
             # Draw gaze vector if enabled
             if not args.skip_gaze_vector:
-                # TODO fix this method
                 frame = draw_gaze_vector(frame, face, gaze, meta)
 
         # Show the current frame (with landmarks and gaze vector if applicable and enabled)
