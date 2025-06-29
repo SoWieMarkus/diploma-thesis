@@ -14,7 +14,7 @@ MODEL_DOWNLOAD_URL = "https://dlib.net/files/shape_predictor_68_face_landmarks.d
 MODEL_ZIP_FILE_NAME = "shape_predictor_68_face_landmarks.dat.bz2"
 MODEL_ZIP_FILE_PATH = os.path.join(ASSETS_DIRECTORY, MODEL_ZIP_FILE_NAME)
 
-MODEL_FILE_NAME = "shape_predictor_68_face_landmarks.dat"
+MODEL_FILE_NAME = "dlib-landmarks68.dat"
 MODEL_FILE_PATH = os.path.join(ASSETS_DIRECTORY, MODEL_FILE_NAME)
 
 TEMPLATE_PATH = os.path.join(
