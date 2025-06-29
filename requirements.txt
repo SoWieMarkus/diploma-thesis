@@ -2,7 +2,7 @@ dlib==20.0.0
 fastapi==0.115.14
 matplotlib==3.10.3
 mediapipe==0.10.21
-numpy>=1.26.4,<2.0.0
+numpy>=2.3.1,<2.4.0
 opencv_contrib_python==4.11.0.86
 opencv_python==4.11.0.86
 Requests==2.32.4
