@@ -1,0 +1,270 @@
+% the following command is only required if the thesis is written in german
+\RequirePackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+\documentclass[
+  paper=A4,
+  twoside,
+  cdgeometry=centered,
+  ngerman, % change to ngerman for german theses, % use two-side for booklike layouts
+  cdfont=on, % modify this to use the TUD font (Open Sans)
+  numbers=noenddot, % remove trailing dots in chapter/section/... enumeration
+  openright,
+  parskip=half,
+]{tudscrreprt}
+
+
+% use a custom serif font
+\usepackage[bitstream-charter]{mathdesign}
+% make chapter, section, ... use serif font
+\addtokomafont{disposition}{\rmfamily}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[
+  ngerman % change to ngerman for german theses
+]{babel}
+\usepackage{isodate}
+\usepackage{pdfpages}
+\usepackage{listings}
+\usepackage[toc, page]{appendix}
+\usepackage{hyphenat}
+\usepackage{subcaption}
+
+\usepackage[
+  style=alphabetic,
+  backend=biber,
+  url=false,
+  doi=false,
+  isbn=false,
+  hyperref,
+]{biblatex}
+% configure the location of the biblatex file
+\addbibresource{bibliography.bib}
+\AtEveryBibitem{%
+  \clearfield{note}%
+}
+
+% make all links clickable but hide ugly boxes
+\usepackage[hidelinks]{hyperref}
+% automatically insert Fig. X in the text with \cref{..}
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref}
+
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{svg}
+\usepackage{amsmath}
+
+
+% if you need mathy stuff
+\newtheorem{lem}{Lemma}
+\crefname{lem}{Lemma}{Lemmas}
+\newtheorem{thm}{Theorem}
+\crefname{thm}{Theorem}{Theorems}
+\newtheorem{defs}{Definition}
+\crefname{defs}{Def.}{Defs.}
+
+\usepackage{blindtext}
+
+%\usepackage{tudscrsupervisor} % if you want to copy the sources of the task description into the thesis
+
+\usepackage{csquotes}
+
+\usepackage{caption}
+\captionsetup{font=normalfont,labelfont=normalfont,labelsep=space}
+\usepackage{floatrow}
+\floatsetup{font=normalfont}
+\floatsetup[table]{style=plaintop}
+\captionsetup{singlelinecheck=off,format=hang,justification=raggedright}
+\DeclareCaptionSubType[alph]{figure}
+\DeclareCaptionSubType[alph]{table}
+\captionsetup[subfloat]{labelformat=brace,list=off}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{tabulary}
+\usepackage{tabu}
+\usepackage{longtable}
+\usepackage{gensymb}
+\usepackage{multirow}
+\usepackage{colortbl,dcolumn}
+\usepackage{quoting}
+\usepackage{tikzducks}
+\usepackage[weather]{ifsym}
+\usepackage{wasysym}
+
+\usepackage[babel]{microtype}
+
+\usepackage{xfrac}
+
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\usepackage{pdflscape}
+
+\usepackage{makecell}
+
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep}
+
+\usepackage{ellipsis}
+\let\ellipsispunctuation\relax
+
+\input{lst.tex} % code styles (listings)
+
+% use this custom theorem for research questions
+\newtheorem{researchquestion}{Forschungsfrage}
+\crefname{researchquestion}{Forschungsfrage}{Forschungsfragen}
+
+% use this custom environment for equations
+\newenvironment{conditions}
+  {\par\vspace{\abovedisplayskip}\noindent\begin{tabular}{>{$}l<{$} @{${}={}$} l}}
+  {\end{tabular}\par\vspace{\belowdisplayskip}}
+
+\usepackage{float}
+
+% configure the name of your appendix
+\renewcommand\appendixtocname{Anhang}
+\renewcommand\appendixpagename{Anhang}
+
+% use \tocless before a chapter/section/... in the
+% appendix to hide it from the toc
+\newcommand{\nocontentsline}[3]{}
+\newcommand{\tocless}[2]{
+  \bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup
+}
+
+\newcommand{\intersection}{S}
+
+\newcommand{\intersectionx}{S_x}
+
+\newcommand{\intersectiony}{S_y}
+\newcommand{\gazevector}{\vec{g}}
+\newcommand{\cameraplane}{E_{\text{Kamera}}}
+\newcommand{\centerface}{C}
+\newcommand{\numberframe}{\(n\)\xspace}
+\newcommand{\timestamp}{\(t_n\)\xspace}
+\newcommand{\widthvideo}{w_{\text{Video}}}
+\newcommand{\heightvideo}{h_{\text{Video}}}
+\newcommand{\rotationvector}{\vec{r}}
+\newcommand{\translationvector}{\vec{t}}
+\newcommand{\rotationmatrix}{R}
+\newcommand{\indexlandmark}{i}
+\newcommand{\landmark}{L_{\text{\indexlandmark}}}
+\newcommand{\landmarkxnorm}{x_{\text{norm}}}
+\newcommand{\landmarkynorm}{y_{\text{norm}}}
+\newcommand{\landmarkznorm}{z_{\text{norm}}}
+\newcommand{\landmarkxbild}{x_{\text{Bild}}}
+\newcommand{\landmarkybild}{y_{\text{Bild}}}
+\newcommand{\landmarkxmodel}{x_{\text{mod}}}
+\newcommand{\landmarkymodel}{y_{\text{mod}}}
+\newcommand{\landmarkzmodel}{z_{\text{mod}}}
+
+\newcommand{\hitthresholdsize}{l}
+\newcommand{\hitthresholdposition}{p}
+\newcommand{\ethg}{\textit{ETH-XGaze}\xspace}
+\newcommand{\mpii}{\textit{MPIIFaceGaze}\xspace}
+\newcommand{\gazed}{\textit{Gaze360}\xspace}
+
+\newcommand{\earthreshold}{T_{\text{EAR}}}
+\newcommand{\ear}{EAR}
+
+
+\newcommand{\mediapipe}{\textit{MediaPipe}\xspace}
+\newcommand{\dlib}{\textit{dlib}\xspace}
+
+\newcommand{\cameramatrix}{K}
+\newcommand{\normcameramatrix}{K_{\text{normalisiert}}}
+\newcommand{\cnn}{Convolutional Neural Network\xspace}
+\newcommand{\projectionmatrix}{M_\text{Projektion}}
+\newcommand{\scalematrix}{M_\text{Skalierung}}
+
+\newcommand{\precision}{\textit{Precision}\xspace}
+\newcommand{\recall}{\textit{Recall}\xspace}
+
+\newcommand{\distancefacecamera}{d_{\text{GK}}\xspace}
+\newcommand{\markus}{Person A\xspace}
+\newcommand{\paul}{Person B\xspace}
+\newcommand{\florian}{Person C\xspace}
+\newcommand{\philipp}{Person D\xspace}
+
+
+
+\begin{document}
+
+  % use uppercase roman letters for all pages until the introduction
+  % this way, it is easier to identify how many pages the thesis has
+  \pagenumbering{Roman}
+
+  \faculty{Fakultät Informatik}
+  \department{}
+  \institute{Institut für Systemarchitektur}
+  \chair{Professur für Distributed and Networked Systems}
+  \title{Konzeption und Evaluation einer Smartphone-basierten Eye-Tracking-Lösung für den Einsatz bei Radfahrten mit hoher Robustheit gegenüber wechselnden Umweltbedingungen}
+
+  \thesis{diploma} % the type of thesis you want to write
+
+  \author{Markus Uwe Wieland}
+  \matriculationnumber{4791192}
+  \matriculationyear{2018}
+  \dateofbirth{09.05.2000}
+  \placeofbirth{Chemnitz}
+
+  \course{Diplom Informatik (PO 2010)}
+
+  \supervisor{%
+    Dr.-Ing. Thomas Springer\\
+    Dipl.-Inf. Philipp Matthes
+  }
+  \date{04.12.2023} % the date of submission
+  \maketitle
+
+  \newpage
+
+  % include the task definition if you want
+  \includepdf[pages=-]{task/task.pdf}
+  \newpage
+
+  % for the order of the following sections please refer to
+  % the recommendations for thesis structuring
+  \confirmation
+
+  \tableofcontents
+
+  \listoffigures
+  \addcontentsline{toc}{chapter}{\listfigurename}
+
+  \listoftables
+  \addcontentsline{toc}{chapter}{\listtablename}
+
+  % this is where your thesis lives
+
+  \input{sections/01-introduction.tex}
+  \input{sections/02-basics.tex}  
+  \input{sections/03-related.tex}
+  \input{sections/04-concept.tex}
+  \input{sections/05-implementation.tex}
+  \input{sections/06-evaluation.tex}
+  \input{sections/07-fazit.tex}
+
+
+  \newpage
+  \cleardoublepage
+  
+
+  % use lowercased roman page numbers for the appendix and the bibliography
+  \pagenumbering{roman}
+  \newpage
+
+  \printbibliography[heading=bibintoc]\label{sec:bibliography}%
+  
+   \cleardoublepage
+  \begin{appendices}
+    \input{sections/appendix.tex}
+  \end{appendices}
+
+\end{document}

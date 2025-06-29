@@ -1,0 +1,78 @@
+\chapter{Einleitung}\label{sec:introduction}\pagenumbering{arabic}
+
+\section{Motivation}\label{sec:introduction:motivation}
+
+Die Klimakrise ist zweifellos eine der größten Herausforderungen unserer Zeit. Ein Hauptgrund dafür ist der städtische Verkehr, der oft von vollen Straßen, Stau und Lärm geprägt ist, was zu hohen $\text{CO}_\text{2}$- und Feinstaubemissionen führt. Eine mögliche Lösung, um den Verkehr in Städten zu entlasten und umweltfreundlicher zu gestalten, ist die Förderung des Fahrradfahrens. Aus diesem Grund hat die Stadt Hamburg das \textit{PrioBike} Projekt\footnote{\url{https://www.hamburg.de/bvm/priobike/} (Abgerufen am 08.11.2023)} ins Leben gerufen. Es zielt darauf ab, das Fahrradfahren in der Stadt attraktiver und revolutionärer zu gestalten. 
+
+Neben speziellen Fahrradstreifen und Anpassungen der Lichtsignalanlagen in der Stadt wird eine App für Radfahrende von der Technischen Universität Dresden entwickelt\footnote{\url{https://tu-dresden.de/bu/verkehr/vis/vpa/forschung/Individualverkehr/priobike} (Abgerufen am 08.11.2023)}. Diese App ermöglicht eine für Fahrräder optimierte Navigation durch die Stadt. Dabei werden während der Fahrt Ampeldaten genutzt, die von der Stadt Hamburg bereitgestellt werden, um den Nutzenden der App eine Geschwindigkeitsempfehlung zu geben, mit der diese die nächste Lichtsignalanlage bei Grün erreichen können, ohne an roten Ampeln warten zu müssen. Weitere Daten wie das Wetter oder die Oberflächenbeschaffenheit der Straßen sollen genutzt werden, um in der App nicht nur die schnellste oder kürzeste Route bereitzustellen, sondern auch die sicherste und attraktivste Route. 
+
+Um die App während der Fahrt zu verwenden, kann man das Smartphone mit einer Halterung am Lenker des Fahrrads befestigen. Die Verwendung des Smartphones während der Fahrt birgt jedoch Risiken, da die Radfahrenden leicht abgelenkt werden können, wodurch eine gefährliche Situationen im Straßenverkehr entstehen kann. 
+
+Um Ablenkungen durch die PrioBike-App zu vermeiden, sollen unübersichtliche oder ablenkende Ansichten in der App identifiziert und überarbeitet werden. Gleichzeitig wird an Features geforscht, die dazu beitragen sollen, dass Personen während der Fahrt seltener auf ihr Smartphone schauen müssen. Ein Beispiel für ein solches Feature wird in der Arbeit von Pickhardt \cite{diplom:paul:pickhardt} präsentiert. Diese Arbeit beschäftigt sich mit der Entwicklung von multimodalen Interaktionsmethoden für die Geschwindigkeitsempfehlung der PrioBike-App durch vibrotaktile und auditive Signale.
+
+Um herauszufinden, ob ein solche Funktion dazu beiträgt, dass Radfahrende weniger auf ihr Smartphone schauen, bzw. um ablenkende Ansichten in der App zu identifzieren, muss ermittelt werden, zu welchen Zeitpunkten und über welchen Zeitraum die Personen auf ihr Smartphone schauen. Da eine Befragung der Personen häufig durch Bias beeinträgt ist, sollte die Erfassung der Daten durch eine Messung geschehen, um eine quantitative Auswertung zu ermöglichen. Daher soll im Rahmen dieser Arbeit untersucht werden, wie geeignet die Smartphones der Nutzenden sind, um eine solche Messung der Blickrichtung durchzuführen.
+
+\section{Problem- und Zielstellung}\label{sec:introduction:goal}
+
+Die Bestimmung der Blickrichtung von Menschen ist eine anspruchsvolle Aufgabe, welche in vielen Anwendungsbereichen relevant sein kann. Infolgedessen wurde bereits umfangreiche Forschung betrieben, um die Blickrichtungsverfolgung von Menschen zu optimieren. So wurden zahlreiche unterschiedliche Technologien entwickelt, die teilweise sehr präzise Messungen der Blickrichtung erlauben. Diese Technologien basieren jedoch meist auf teurer, zusätzlicher Hardware und erfordern eine Kalibrierung, um optimale Ergebnisse zu erzielen.
+
+Für den Anwendungsfall der PrioBike-App ist jedoch eine kostengünstige Lösung notwendig, da während einer Testphase der App die Daten von vielen verschiedenen Teilnehmenden gesammelt werden sollen. Da die Teilnehmenden durch die Nutzung der PrioBike-App ihr Smartphone bereits am Fahrradlenker befestigt haben, wäre eine Lösung ideal, die ohne zusätzliche Hardware und Kalibrierung auskommt und nur mit der Innenkamera der Smartphones funktioniert.
+
+Es existieren bereits Lösungen, die anhand der Analyse des Videostreams einer Kamera die Blickrichtung von Menschen bestimmen können. Diese sind nicht so präzise, erlauben aber trotzdem eine gute Annäherung, was im Fall der PrioBike-App ausreichend ist. Solche Technologien werden auch bereits in Anwendungen für mobile Geräte verwendet. Diese sind jedoch hauptsächlich für ruhende Menschen optimiert, welche frontal zur Kamera positioniert sind. In der Priobike-App ergeben sich jedoch Probleme aufgrund der unterschiedlichen Fahrradkonstruktionen und der damit verbundenen Körperhaltung. So können der Abstand zur Kamera und die Ausrichtung des Kopfes relativ zur Kamera stark variieren. Dies kann dazu führen, dass die Smartphone-Kamera einen schwierigen Blickwinkel auf die Gesichter der Personen hat, wodurch die Augen möglicherweise nur teilweise oder gar nicht zu sehen sind.
+
+Die Nutzenden der PrioBike-App verwenden die App während der Fahrt mit dem Fahrrad. Der Videostream der Frontkamera kann daher durch verschiedene Umgebungsbedingungen beeinträchtigt werden. Vibrationen, die durch den Fahrstil der Nutzenden oder durch die Fahrbahnoberfläche verursacht werden, können das aufgenommene Bild verzerren, was bei bestehenden Lösungen zu Problemen bei der Erfassung der Augenbewegungen der Personen führen kann. 
+
+Ein weiteres Problem ist die Umgebung der Nutzenden während der Fahrt. Durch die Montage des Smartphones am Lenker, filmt die Frontkamera größtenteils den Himmel. Dadurch ist mit wechselnden und vor allem schwierigen Lichtverhältnissen zu rechnen. Auch andere Umwelteinflüsse wie das Wetter können die Messgenauigkeit einschränken.
+
+Eine weitere Herausforderung stellt die visuelle Vielfalt der verschiedenen Beteiligten an der Studie dar. Es ist anzunehmen, dass ein nicht unwesentlicher Teil der Nutzenden auf das Tragen eine Brille angewiesen ist. Das Glas der Brille kann Licht reflektieren und so die Augen unkenntlich machen. Je nach Form der Brille könnte diese auch Teile der Augen verdecken. Bei sonnigem Wetter könnten die Teilnehmenden eine Sonnenbrille tragen, was das Erkennen der Augen ebenfalls sehr erschweren könnte. Dazu kommen weitere körperliche Eigenschaften, wie unterschiedliche Haare, welche bei manchen Nutzenden Teile des Gesichts verdecken.
+ 
+Im Rahmen dieser Arbeit soll die Eignung bestehender Ansätze für den speziellen Anwendungsfall der Messung während der Fahrradfahrt untersucht werden, um ein für die PrioBike-App optimiertes Verfahren zu entwickeln. Dieses Verfahren soll robust gegenüber den oben genannten Problemen sein, die durch die Umgebung, die individuelle Vielfalt der Menschen und den Blickwinkel der Kamera auf die Menschen während der Fahrt entstehen können. Um dieses Ziel zu erreichen, sollen folgende Forschungsfragen beantwortet werden:
+
+\begin{researchquestion}\label{rq:best_possibility}
+Was ist die beste Möglichkeit, nur mittels der Frontkamera eines mobilen Geräts die Blickrichtung der Nutzenden während der Fahrt zu verfolgen?
+\end{researchquestion}
+
+\begin{researchquestion}\label{rq:precision}
+Wie präzise lässt sich mit der Frontkamera eines Smartphones, welches am
+Lenker eines Fahrrads befestigt ist, bestimmen, zu welchen Zeitpunkten eine Person während der Fahrt auf das Smartphone sieht?
+\end{researchquestion}
+
+\begin{researchquestion}\label{rq:technical_problems}
+Welche technischen Hürden sind zu überwinden, um eine Blickrichtungserkennung mittels
+Smartphones auf einem Fahrrad zu entwickeln?
+\end{researchquestion}
+
+\begin{researchquestion}\label{rq:qc}
+Wie kann die Qualität der aufgezeichneten Daten maximiert und Fehler minimiert werden?
+\end{researchquestion}
+
+\begin{researchquestion}\label{rq:umwelt}
+Wie gut können die genannten Umwelteinflüsse (Licht, Erschütterungen) kompensiert werden?
+\end{researchquestion}
+
+\begin{researchquestion}\label{rq:verdeckt}
+Wie gut lässt sich die Messung durchführen, wenn Teile des Gesichts der Person verdeckt sind?
+\end{researchquestion}
+
+\begin{researchquestion}\label{rq:kalibrierung}
+Welche Kalibrierungen müssen zwingend vorgenommen werden, damit das Eye-Tracking funktioniert?
+\end{researchquestion}
+
+\section{Struktur der Arbeit}\label{sec:introduction:structure}
+
+In diesem Kapitel wird der Aufbau der Arbeit vorgestellt. Zunächst werden in Kapitel \ref{sec:basics} Grundlagen vermittelt, die für das allgemeine Verständnis der Arbeit relevant sind. Dabei wird zunächst die Funktionsweise des menschlichen Auges erläutert. Anschließend wird ein Überblick über verschiedene Möglichkeiten gegeben, die Blickrichtung eines Menschen zu bestimmen. Außerdem werden Metriken vorgestellt, die in dieser Arbeit für die Evaluation verwendet werden.
+
+In Kapitel \ref{sec:related} werden verwandte Arbeiten diskutiert. Insbesondere wird in diesem Kapitel die Bachelorarbeit von Henseler \cite{bachelor:henseler:gaze-ebikes} vorgestellt. In dieser beschäftigte sich Henseler bereits mit der Entwicklung eines Konzepts zur Bestimmung der Blickrichtung von Radfahrenden mittels der Innenkamera eines Smartphones. Es wird diskutiert, ob dieser Ansatz auch im Rahmen der PrioBike-App genutzt werden kann. Des Weiteren wird der aktuelle Stand der Forschung zu Methoden der Blickrichtungsbestimmung vorgestellt. Dabei wird auf verschiedene Ansätze eingegangen, die sich entweder mit der Blickrichtungsbestimmung mit Smartphones oder mit der Blickrichtungsbestimmung aus dem Videofeed einer Kamera beschäftigen. Abschließend wird ein Überblick über Arbeiten gegeben, die sich mit der Erkennung von Gesichtern in einem Bild beschäftigen, da dies während der Recherche als wichtiger Teilschritt identifiziert wurde.
+
+Anhand der Erkenntnisse aus den verwandten Arbeiten wurden verschiedene Ansätze identifiziert, die danach in Kapitel \ref{sec:concept} auf ihre Eignung für den Einsatz in der PrioBike-App untersucht werden. Darauf aufbauend werden zwei unterschiedliche Konzepte zur Bestimmung der Blickrichtung von Radfahrenden entwickelt. 
+
+In Kapitel \ref{sec:implementation} wird die Implementierung der beiden Konzepte vorgestellt. Zunächst wird ein allgemeiner Überblick über die Funktionsweise der Implementierung gegeben. Anschließend wird beschrieben, wie die einzelnen Schritte der beiden Konzepte umgesetzt wurden.
+
+Anschließend wird die Evaluation der Konzepte in Kapitel \ref{sec:evaluation} vorgestellt. Dazu wird die Planung und Vorbereitung der Evaluation beschrieben und die Ergebnisse der Evaluation vorgestellt und diskutiert.
+
+Abschließend werden in Kapitel \ref{sec:fazit} anhand der Ergebnisse die Forschungsfragen 
+beantwortet. Darüber hinaus werden verschiedene Schwächen und Stärken dieser Arbeit diskutiert und weitere Forschungsrichtungen aufgezeigt, die auf dieser Arbeit aufbauen können.
+
+
+
+

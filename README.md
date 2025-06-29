@@ -1,40 +1,71 @@
-# Dokumentation Blickrichtungsbestimmung
+# Diploma Thesis: Conception and Evaluation of a Smartphone-based Eye-Tracking Solution for Use in Bicycle Rides with High Robustness against Changing Environmental Conditions
 
-Für die Blickrichtungsbestimmung müssen zunächst die benötigten Python Packages installiert werden:
+his repository contains the complete implementation and documentation of my diploma thesis submitted on December 4th, 2023, at the Technical University of Dresden (Technische Universität Dresden). The project develops a smartphone-based eye-tracking system designed specifically for cyclists, contributing to safer navigation app usage during bicycle rides.
 
-```
+## Screenshots
+
+## Content
+
+## 🚀 Try it yourself
+
+### Prerequisites
+
+- [Download Python](https://www.python.org/downloads/)
+- [Download Node.js](https://nodejs.org/)
+- Install Angular CLI with `npm install -g @angular/cli`
+
+### Set up Python Environment
+
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+# Windows:
+.venv\Scripts\activate
+# macOS/Linux:
+source .venv/bin/activate
+
+# Install Python dependencies
 pip install -r requirements.txt
 ```
 
-Anschließend müssen alle Videos die verarbeitet werden sollen in den `./input` Ordner abgelegt werden. Dabei ist zu
-beachten, dass in der aktuellen Implementierung nur Videos im MP4-Format unterstützt werden. Es lassen sich jedoch
-einfach weitere Videoformate hinzufügen, indem in der `VideoManager` Klasse das entsprechende Format zu der
-Liste `video_extensions` hinzugefügt wird.
+- create a .venv
+- install requirements.txt
+- run `python demo.py`
 
-Anschließend kann die Blickrichtungsbestimmung mit dem `main.py` Skript ausgeführt werden.
-Dabei werden zu Beginn alle benötigten Modelle heruntergeladen. 
+### Run demo.py
 
+The demo script supports various configuration options:
 
-ACHTUNG WICHTIG ACHTUNG HIER! Sollte die Verarbeitung mit l2cs-gaze-360 fehlschlagen,
-wurde der Download der Datei nicht richtig durchgeführt. In diesem Fall muss die Datei von L2CS-net manuell unter
-folgender URL heruntergeladen werden:
-https://drive.google.com/uc?id=18S956r4jnHtSeT8z8t3z8AoJZjVnNqPJ&export=download
-Quelle: https://github.com/Ahmednull/L2CS-Net#demo
+```bash
 
-Die Datei muss dann unter `./models/l2cs-gaze-360/L2CSNet_gaze360.pkl` gespeichert werden.
+python demo.py
 
-Dabei wird als erstes die Gesichtserkennung in `face_detection.py` ausgeführt. Die Ergebnisse werden im `./output`
-Ordner gespeichert. (`.face` Dateien)
-Dann wird die Blickrichtungsbestimmung aufbauend auf den Ergebnissen der Gesichtserkennung durchgeführt. Auch die
-Ergebnisse von diesem Schritt werden in dem `./output` Ordner gespeichert. (`.gaze` Dateien). Der Aufbau der Dateien ist
-in meiner Diplomarbeit erklärt.
+# Use different face detector (mediapipe or dlib)
+python demo.py --face_detector mediapipe
 
-In diesen Dateien ist dann die Vorhersage ob die Person sieht oder nicht, basierend auf der in meiner Diplomarbeit modellierten Zone aufgeführt.
+# Use different gaze estimation model
+python demo.py --gaze_detector eth-xgaze
+# Available options: eth-xgaze, gaze360, mpiifacegaze, head-rotation
 
-Wenn du für deine Videos eine Evaluation wie in meiner Diplomarbeit durchführen möchtest, muss zunächst eine Ground Truth erstellt werden.
-Dafür kann das Evaluationstool verwendet werden. Siehe die README in `./evaluation`.
-Dann gehe auf `localhost:4200/labels`
-Dort siehst du eine Übersicht über deine Videos und die Ground Truths die erstellt werden müssen.
-Arbeite alle ab.
+# Use specific camera (if you have multiple cameras)
+python demo.py --cam 1
 
-Im Anschluss kannst du die Evaluation mit dem `evaluate.py` Skript durchführen.
+# Customize visualization
+python demo.py --draw_important_landmarks    # Show only key facial landmarks
+python demo.py --skip_landmarks             # Hide facial landmarks
+python demo.py --skip_gaze_vector          # Hide gaze direction vector
+```
+
+## Abstract
+
+The climate crisis represents one of the greatest challenges of our time, with urban traffic being a major contributor through high CO2 and particulate matter emissions. To address this issue, the city of Hamburg initiated the PrioBike project, which aims to make cycling more attractive and revolutionary through optimized navigation apps that provide speed recommendations based on traffic light data.
+
+However, smartphone usage while cycling poses significant safety risks due to potential distractions. This thesis investigates the feasibility of smartphone-based eye-tracking solutions to monitor when cyclists look at their devices, enabling the identification of distracting app interfaces and evaluation of alternative interaction methods. The work aimed to develop and evaluate a robust smartphone-based eye-tracking system for cyclists that operates using only the front-facing camera, without additional hardware or calibration requirements, while maintaining high robustness against changing environmental conditions.
+
+Various gaze estimation approaches were investigated, including deep learning appearance-based methods and head rotation-based techniques. Face detection was performed using MediaPipe and dlib, followed by 3D gaze direction estimation using convolutional neural networks trained on ETH-XGaze, Gaze360, and MPIIFaceGaze datasets. The system determines whether cyclists are looking at their smartphone display by modeling a detection zone on the camera plane.
+
+The best performance was achieved using MediaPipe for face detection combined with ETH-XGaze for gaze estimation, reaching an F1-score of 0.928. The system successfully compensated for normal environmental influences including vibrations and varying lighting conditions. However, challenges were identified with sunglasses, night recordings, and extreme head rotations.
+
+The developed system demonstrates that smartphone-based eye-tracking for cyclists is feasible and can effectively determine when users look at their devices. The solution is robust against typical cycling conditions and provides a cost-effective approach for evaluating app interfaces and interaction methods in real-world cycling scenarios. This work contributes significantly to the safe usage of navigation apps while cycling and provides a foundation for future studies within the PrioBike project.
