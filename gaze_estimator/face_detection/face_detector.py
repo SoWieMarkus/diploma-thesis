@@ -158,7 +158,6 @@ class FaceDetector(ABC):
             logging.error("Failed to solve PnP problem for face landmarks.")
             return None
 
-        # TODO this could lead to an error
         head_rotation_matrix = cv2.Rodrigues(rotation_vector)[0]
 
         landmarks_3d = (
@@ -181,7 +180,6 @@ class FaceDetector(ABC):
 
         bounding_box = get_bounding_box(image_points)
 
-        # TODO das vielleicht in eigene Methode auslagern
         z_axis = center / numpy.linalg.norm(center)
         head_x_axis = head_rotation_matrix[:, 0]
 
