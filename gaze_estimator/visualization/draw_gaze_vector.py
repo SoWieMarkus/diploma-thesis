@@ -37,7 +37,7 @@ def draw_gaze_vector(
         numpy.ndarray: The frame with the gaze vector drawn.
     """
     point1 = face.center
-    point2 = face.center + 1 * gaze.vector
+    point2 = face.center + 0.2 * gaze.vector
 
     points3d = numpy.vstack([point1, point2])
     points2d = project_points(points3d, meta)
