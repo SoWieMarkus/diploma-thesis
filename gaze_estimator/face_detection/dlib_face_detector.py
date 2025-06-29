@@ -2,24 +2,16 @@ from .face_detector import FaceDetector, FaceTemplateModel
 from .face import FaceLandmark
 import os
 import numpy
-import bz2
-import torch
-import logging
 import dlib
 
 ASSETS_DIRECTORY = os.path.join(os.path.dirname(__file__), "..", "..", "data", "assets")
 
-MODEL_DOWNLOAD_URL = "https://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2"
-
-MODEL_ZIP_FILE_NAME = "shape_predictor_68_face_landmarks.dat.bz2"
-MODEL_ZIP_FILE_PATH = os.path.join(ASSETS_DIRECTORY, MODEL_ZIP_FILE_NAME)
-
-MODEL_FILE_NAME = "dlib-landmarks68.dat"
+MODEL_FILE_NAME = "face-model-dlib.dat"
 MODEL_FILE_PATH = os.path.join(ASSETS_DIRECTORY, MODEL_FILE_NAME)
 
 TEMPLATE_PATH = os.path.join(
     ASSETS_DIRECTORY,
-    "template_model_3d_dlib.csv",
+    "template-model-3d-dlib.csv",
 )
 
 
@@ -65,23 +57,7 @@ class DlibFaceDetector(FaceDetector):
     def __init__(self):
         template_model = DlibFaceTemplateModel()
         super().__init__("dlib", template_model)
-        model_zip_path = os.path.abspath(MODEL_ZIP_FILE_PATH)
         model_path = os.path.abspath(MODEL_FILE_PATH)
-        if not os.path.exists(model_path):
-            logging.info("Downloading Dlib face model...")
-
-            # Download shape predictor (68 landmarks) as .bz2 file
-            torch.hub.download_url_to_file(
-                MODEL_DOWNLOAD_URL, model_zip_path, progress=True
-            )
-
-            # Extract shape predictor from the .bz2 file
-            with bz2.BZ2File(model_zip_path, "rb") as zip_file, open(
-                model_path, "wb"
-            ) as model_file:
-                data = zip_file.read()
-                model_file.write(data)
-
         self.frontal_face_detector = dlib.get_frontal_face_detector()
         self.shape_predictor = dlib.shape_predictor(str(model_path))
 

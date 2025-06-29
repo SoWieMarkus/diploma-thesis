@@ -4,6 +4,7 @@ from sqlmodel import SQLModel, create_engine, Session, select
 from typing import List, Optional
 import os
 import sys
+import uvicorn
 
 # Add the parent directory to the path to import models
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -175,6 +176,4 @@ async def get_gaze_by_id(gaze_id: str, session: Session = Depends(get_session)):
 
 
 if __name__ == "__main__":
-    import uvicorn
-
     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)

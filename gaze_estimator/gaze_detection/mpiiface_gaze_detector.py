@@ -20,8 +20,7 @@ class MPIIFaceGazeDetector(GazeDetector):
     def __init__(self):
         super().__init__(
             name="mpiifacegaze",
-            download_url="https://github.com/hysts/pytorch_mpiigaze_demo/releases/download/v0.1.0/mpiifacegaze_resnet_simple.pth",
-            model_file_name="mpiifacegaze-model.pth",
+            model_file_name="gaze-model-mpiifacegaze.pth",
             # see: https://github.com/hysts/pytorch_mpiigaze_demo/blob/master/ptgaze/data/normalized_camera_params/mpiifacegaze.yaml
             normalized_distance=1,
             normalized_camera_matrix=numpy.array(
@@ -32,7 +31,7 @@ class MPIIFaceGazeDetector(GazeDetector):
             normalized_image_width=224,
             transform=Compose(
                 [
-                    Lambda(lambda x: cv2.resize(x, tuple([224, 224]))),
+                    Lambda(lambda x: cv2.resize(x, ([224, 224]))),
                     ToTensor(),
                     Normalize(mean=[0.406, 0.456, 0.485], std=[0.225, 0.224, 0.229]),
                 ]

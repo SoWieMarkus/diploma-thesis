@@ -15,8 +15,7 @@ class Gaze360GazeDetector(GazeDetector):
     def __init__(self):
         super().__init__(
             name="l2cs-gaze-360",
-            download_url="https://drive.google.com/uc?id=18S956r4jnHtSeT8z8t3z8AoJZjVnNqPJ&export=download",
-            model_file_name="L2CSNet_gaze360.pkl",
+            model_file_name="gaze-model-gaze360.pkl",
             normalized_camera_matrix=numpy.array(
                 [[960.0, 0.0, 112.0], [0.0, 960.0, 112.0], [0.0, 0.0, 1]],
                 dtype="double",
@@ -35,7 +34,7 @@ class Gaze360GazeDetector(GazeDetector):
         )
         self.softmax = nn.Softmax(dim=1)
         self.device = torch.device("cpu")
-        self.idx_tensor = [idx for idx in range(90)]
+        self.idx_tensor = list(range(90))
         self.idx_tensor = torch.FloatTensor(self.idx_tensor).to("cpu")
 
     def load_model(self):

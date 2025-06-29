@@ -7,7 +7,7 @@ import mediapipe
 ASSETS_DIRECTORY = os.path.join(os.path.dirname(__file__), "..", "..", "data", "assets")
 TEMPLATE_PATH = os.path.join(
     ASSETS_DIRECTORY,
-    "template_model_3d_mediapipe.csv",
+    "template-model-3d-mediapipe.csv",
 )
 
 

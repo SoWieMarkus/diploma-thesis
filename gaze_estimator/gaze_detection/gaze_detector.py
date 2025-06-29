@@ -18,7 +18,6 @@ class GazeDetector(ABC):
     def __init__(
         self,
         name: str,
-        download_url: str | None = None,
         model_file_name: str | None = None,
         normalized_camera_matrix: numpy.array = None,
         normalized_distance: float | None = None,
@@ -26,7 +25,6 @@ class GazeDetector(ABC):
         normalized_image_width: int | None = None,
         transform: Compose | None = None,
     ):
-        self.download_url = download_url
         self.model_file_name = model_file_name
         self.name = name
         self.model = None
@@ -45,9 +43,8 @@ class GazeDetector(ABC):
         )
 
         if not os.path.exists(self.model_file_path):
-            logging.info(f"Downloading {name} model...")
-            torch.hub.download_url_to_file(
-                self.download_url, self.model_file_path, progress=True
+            raise FileNotFoundError(
+                f"Model file '{self.model_file_name}' not found in assets directory: {ASSETS_DIRECTORY}"
             )
         self.load_model()
 

@@ -19,8 +19,7 @@ class ETHXGazeDetector(GazeDetector):
     def __init__(self):
         super().__init__(
             name="eth-xgaze",
-            download_url="https://github.com/hysts/pytorch_mpiigaze_demo/releases/download/v0.2.2/eth-xgaze_resnet18.pth",
-            model_file_name="eth-gaze-model.pth",
+            model_file_name="gaze-model-ethx.pth",
             # Source: https://github.com/hysts/pytorch_mpiigaze_demo/blob/master/ptgaze/data/normalized_camera_params/eth-xgaze.yaml
             normalized_distance=0.6,
             normalized_camera_matrix=numpy.array(
@@ -31,7 +30,7 @@ class ETHXGazeDetector(GazeDetector):
             normalized_image_width=224,
             transform=Compose(
                 [
-                    Lambda(lambda x: cv2.resize(x, tuple([224, 224]))),
+                    Lambda(lambda x: cv2.resize(x, ([224, 224]))),
                     Lambda(lambda x: x[:, :, ::-1].copy()),
                     ToTensor(),
                     Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
