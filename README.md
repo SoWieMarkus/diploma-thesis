@@ -14,8 +14,8 @@ This repository contains the complete implementation and documentation of my dip
 
 ### Prerequisites
 
-- [Download Visual Studio](https://visualstudio.microsoft.com/de/) (Windows only)
-- [Download CMake] (https://cmake.org/download/)
+- [Download Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Windows only - C++ Build Tools)
+- [Download CMake](https://cmake.org/download/)
 - [Download Python](https://www.python.org/downloads/)
 - [Download Node.js](https://nodejs.org/)
 - Install Angular CLI with `npm install -g @angular/cli`
