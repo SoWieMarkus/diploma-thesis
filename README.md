@@ -90,6 +90,10 @@ Analysis and evaluation tools
 - Statistical analysis tools for measuring accuracy and robustness
 - Performance benchmarking utilities
 
+### **examples/**
+
+Examples to showcase the project.
+
 ### **gaze_estimator/**
 
 Core gaze detection package
