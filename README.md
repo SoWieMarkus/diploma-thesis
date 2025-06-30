@@ -14,13 +14,15 @@ This repository contains the complete implementation and documentation of my dip
 
 ### Prerequisites
 
+- [Download Visual Studio](https://visualstudio.microsoft.com/de/) (Windows only)
+- [Download CMake] (https://cmake.org/download/)
 - [Download Python](https://www.python.org/downloads/)
 - [Download Node.js](https://nodejs.org/)
 - Install Angular CLI with `npm install -g @angular/cli`
 
-### Set up Python Environment
-
 Create a `.env` file based on the provided example.
+
+### Set up Python Environment
 
 ```bash
 # Create virtual environment
