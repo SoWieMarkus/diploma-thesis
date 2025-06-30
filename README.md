@@ -9,6 +9,7 @@ This repository contains the complete implementation and documentation of my dip
 
 ![Visualizer](./thesis/images/debug.jpg)
 ![Annotations](./thesis/images/evaluation/tool.jpg)
+![Example Video](./examples/example.mp4)
 
 ## 🚀 Try it yourself
 
