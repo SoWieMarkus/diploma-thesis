@@ -4,6 +4,7 @@ import logging
 import cv2
 import numpy
 
+from database import create_database_manager
 from gaze_estimator.common.camera import get_meta_data_of_video, VideoCaptureMetaData
 from gaze_estimator.face_detection.dlib_face_detector import DlibFaceDetector
 from gaze_estimator.face_detection.face import Face
@@ -26,7 +27,7 @@ logging.basicConfig(
 INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "data", "input")
 
 # Default directory where the processed output will be saved
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "data", "output")
+OUTPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "data", "output")
 
 # supported video file extensions, for now its only mp4, but other formats should work as well
 VIDEO_EXTENSIONS = [".mp4"]
@@ -42,6 +43,8 @@ GAZE_DETECTORS: list[GazeDetector] = [
     Gaze360GazeDetector(),
     MPIIFaceGazeDetector(),
 ]
+
+database = create_database_manager()
 
 
 def load_videos(directory: str) -> list[str]:
@@ -120,8 +123,9 @@ def process_video(video_path: str, args: argparse.Namespace):
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
-    # TODO delete the face detection and gaze detection from the video inside the database
-    # TODO create video if it does not exist in the database
+    db_video = database.insert_video(meta.name, video_path)
+    # TODO clear entries of videos
+
     frame_count = 0
     while True:
         success, frame = video.video_capture.read()

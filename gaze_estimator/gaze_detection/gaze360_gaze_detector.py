@@ -33,20 +33,21 @@ class Gaze360GazeDetector(GazeDetector):
             ),
         )
         self.softmax = nn.Softmax(dim=1)
-        self.device = torch.device("cpu")
         self.idx_tensor = list(range(90))
         self.idx_tensor = torch.FloatTensor(self.idx_tensor).to("cpu")
 
     def load_model(self):
+        device = torch.device("cpu")
         self.model = L2CS(resnet.Bottleneck, [3, 4, 6, 3], 90)
         pkl = torch.load(self.model_file_path, map_location="cpu")
         self.model.load_state_dict(pkl)
-        self.model.to(self.device)
+        self.model.to(device)
         self.model.eval()
 
     def detect_gaze(self, face, normalized_frame):
+        device = torch.device("cpu")
         image = self.transform(normalized_frame)
-        image = image.to(self.device)
+        image = image.to(device)
 
         if len(image.shape) == 3:
             image = image.unsqueeze(0)

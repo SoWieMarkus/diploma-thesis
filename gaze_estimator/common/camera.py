@@ -31,7 +31,6 @@ def get_meta_data_of_video(video_capture: cv2.VideoCapture) -> VideoCaptureMetaD
     frame_rate = int(video_capture.get(cv2.CAP_PROP_FPS))
     total_frames = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
     center = (width / 2, height / 2)
-    # TODO height?
     camera_matrix = numpy.array(
         [
             [width, 0.0, center[0]],
