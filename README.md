@@ -116,8 +116,7 @@ Core gaze detection package
 
 Interactive web application for data visualization and labeling
 
-- **`backend/`** - FastAPI server providing REST API for accessing video and gaze data
-- **`frontend/`** - Angular web application with Three.js for 3D visualization
+- Angular web application with Three.js for 3D visualization
 - Frame labeling interface for manual annotation
 - Interactive 3D gaze direction visualization
 - Real-time data analysis dashboard

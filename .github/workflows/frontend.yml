@@ -23,7 +23,7 @@ jobs:
         with:
           filters: |
             frontend:
-              - 'visualizer/frontend/**'
+              - 'visualizer/**'
 
   test:
     needs: changes
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./visualizer/frontend
+        working-directory: ./visualizer
 
     steps:
       - name: Checkout repository

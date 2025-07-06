@@ -51,6 +51,14 @@ class DatabaseManager:
         finally:
             session.close()
 
+    def get_session_dependency(self):
+        """Get a database session for FastAPI dependency injection."""
+        session = Session(self.engine)
+        try:
+            yield session
+        finally:
+            session.close()
+
     # Video Management
     def insert_video(self, title: str, path: str) -> Video:
         """

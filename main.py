@@ -15,7 +15,7 @@ import gaze_estimator.io as io
 import gaze_estimator.gaze_detection as gaze_detection
 import gaze_estimator.face_detection as face_detection
 from tqdm import tqdm
-from database import create_database_manager
+from gaze_estimator.database import create_database_manager
 from gaze_estimator.common.camera import get_meta_data_of_video, VideoCaptureMetaData
 
 # Default directory where the videos to be processed are stored
