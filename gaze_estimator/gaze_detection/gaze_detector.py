@@ -5,12 +5,12 @@ import torch
 import numpy
 import cv2
 
+from ..constants import ASSETS_DIRECTORY
+
 from .gaze import Gaze
 from ..common.camera import VideoCaptureMetaData
 from ..face_detection import Face
 from torchvision.transforms import Compose
-
-ASSETS_DIRECTORY = os.path.join(os.path.dirname(__file__), "..", "..", "data", "assets")
 
 
 class GazeDetector(ABC):

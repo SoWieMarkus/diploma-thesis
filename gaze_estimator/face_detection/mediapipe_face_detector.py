@@ -1,10 +1,10 @@
+from ..constants import ASSETS_DIRECTORY
 from .face_detector import FaceDetector, FaceTemplateModel
 from .face import FaceLandmark
 import os
 import numpy
 import mediapipe
 
-ASSETS_DIRECTORY = os.path.join(os.path.dirname(__file__), "..", "..", "data", "assets")
 TEMPLATE_PATH = os.path.join(
     ASSETS_DIRECTORY,
     "template-model-3d-mediapipe.csv",

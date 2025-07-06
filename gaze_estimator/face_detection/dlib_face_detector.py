@@ -3,8 +3,8 @@ from .face import FaceLandmark
 import os
 import numpy
 import dlib
+from ..constants import ASSETS_DIRECTORY
 
-ASSETS_DIRECTORY = os.path.join(os.path.dirname(__file__), "..", "..", "data", "assets")
 
 MODEL_FILE_NAME = "face-model-dlib.dat"
 MODEL_FILE_PATH = os.path.join(ASSETS_DIRECTORY, MODEL_FILE_NAME)
