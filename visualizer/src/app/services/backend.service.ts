@@ -3,7 +3,7 @@ import { Injectable, inject } from "@angular/core";
 import type { Observable } from "rxjs";
 import type { z } from "zod";
 
-const BACKEND_URL = "http://localhost:3000";
+const BACKEND_URL = "http://localhost:3000/api";
 
 @Injectable({
   providedIn: "root",
@@ -49,7 +49,8 @@ export class BackendService {
   public get video() {
     return {
       // TODO add model
-      list: () => this.get("video/list"),
+      list: () => this.get("videos"),
+      get: (id: string) => this.get(`videos/${id}`),
     }
   }
 }
