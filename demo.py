@@ -1,19 +1,10 @@
 import argparse
 import cv2
-from gaze_estimator.gaze_detection import (
-    ETHXGazeDetector,
-    HeadRotationGazeDetector,
-    Gaze360GazeDetector,
-    MPIIFaceGazeDetector,
-    GazeDetector,
-)
-from gaze_estimator.face_detection import (
-    FaceDetector,
-    DlibFaceDetector,
-    MediapipeFaceDetector,
-)
+import gaze_estimator.gaze_detection as gaze_detection
+import gaze_estimator.face_detection as face_detection
+import gaze_estimator.visualization as visualization
+
 from gaze_estimator.common.camera import get_meta_data_of_video
-from gaze_estimator.visualization import draw_landmarks, draw_gaze_vector
 import logging
 
 logging.basicConfig(
@@ -22,18 +13,21 @@ logging.basicConfig(
 )
 
 
-FACE_DETECTORS = {"mediapipe": MediapipeFaceDetector, "dlib": DlibFaceDetector}
+FACE_DETECTORS = {
+    "mediapipe": face_detection.MediapipeFaceDetector,
+    "dlib": face_detection.DlibFaceDetector,
+}
 GAZE_DETECTORS = {
-    "eth-xgaze": ETHXGazeDetector,
-    "head-rotation": HeadRotationGazeDetector,
-    "gaze360": Gaze360GazeDetector,
-    "mpiiface": MPIIFaceGazeDetector,
+    "eth-xgaze": gaze_detection.ETHXGazeDetector,
+    "head-rotation": gaze_detection.HeadRotationGazeDetector,
+    "gaze360": gaze_detection.Gaze360GazeDetector,
+    "mpiiface": gaze_detection.MPIIFaceGazeDetector,
 }
 
 
 def demo(
-    face_detector: FaceDetector,
-    gaze_detector: GazeDetector,
+    face_detector: face_detection.FaceDetector,
+    gaze_detector: gaze_detection.GazeDetector,
     args: argparse.Namespace,
 ):
     """
@@ -71,7 +65,7 @@ def demo(
 
             # Draw detected landmarks if enabled
             if not args.skip_landmarks:
-                frame = draw_landmarks(
+                frame = visualization.draw_landmarks(
                     frame,
                     face,
                     face_detector.template_model,
@@ -80,7 +74,7 @@ def demo(
 
             # Draw gaze vector if enabled
             if not args.skip_gaze_vector:
-                frame = draw_gaze_vector(frame, face, gaze, meta)
+                frame = visualization.draw_gaze_vector(frame, face, gaze, meta)
 
         # Show the current frame (with landmarks and gaze vector if applicable and enabled)
         # Loops until the user presses 'q' to exit

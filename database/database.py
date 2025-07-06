@@ -105,9 +105,6 @@ class DatabaseManager:
 
             frame = Frame(video_id=video_id, index=index, timestamp=timestamp)
             session.add(frame)
-            session.commit()
-            session.refresh(frame)
-
             return frame
 
     def get_frame(self, video_id: str, index: int) -> Optional[Frame]:
