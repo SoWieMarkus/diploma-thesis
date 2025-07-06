@@ -53,14 +53,17 @@ class MPIIFaceGazeDetector(GazeDetector):
         image = image.to(device)
 
         prediction = self.model(image)
-        prediction = prediction.cpu().numpy()
+        prediction = prediction.cpu().detach().numpy()
 
-        vector = get_vector_from_pitch_and_yaw(prediction[0][0], prediction[0][1])
+        pitch = prediction[0][0]
+        yaw = prediction[0][1]
+
+        vector = get_vector_from_pitch_and_yaw(pitch, yaw)
 
         # Apply the face's normalized rotation to the gaze vector
         # This is necessary to align the gaze vector with the face's orientation
-        vector = vector @ face.normalized_rotation
-        return Gaze(vector)
+        vector = vector @ face.normalized_rotation_matrix
+        return Gaze(vector=vector, pitch=pitch, yaw=yaw)
 
 
 # Source: https://github.com/hysts/pytorch_mpiigaze_demo/blob/master/ptgaze/models/mpiifacegaze/backbones/resnet_simple.py

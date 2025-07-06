@@ -45,6 +45,6 @@ def draw_gaze_vector(
     pt0 = tuple(numpy.round(points2d[0]).astype(int).tolist())
     pt1 = tuple(numpy.round(points2d[1]).astype(int).tolist())
 
-    color = (255, 255, 255)
-    cv2.line(frame, pt0, pt1, color, 1, cv2.LINE_AA)
+    color = (255, 0, 255)
+    cv2.line(frame, pt0, pt1, color, 2, cv2.LINE_AA)
     return frame

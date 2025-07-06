@@ -68,13 +68,16 @@ class Gaze360GazeDetector(GazeDetector):
         pitch_predicted = pitch_predicted.cpu().detach().numpy() * numpy.pi / 180.0
         yaw_predicted = yaw_predicted.cpu().detach().numpy() * numpy.pi / 180.0
 
-        vector = get_vector_from_pitch_and_yaw(pitch_predicted[0], yaw_predicted[0])
+        pitch = pitch_predicted[0]
+        yaw = yaw_predicted[0]
+
+        vector = get_vector_from_pitch_and_yaw(pitch, yaw)
 
         # Apply the face's normalized rotation to the gaze vector
         # This is necessary to align the gaze vector with the face's orientation
 
-        vector = vector @ face.normalized_rotation
-        return Gaze(vector=vector, pitch=pitch_predicted[0], yaw=yaw_predicted[0])
+        vector = vector @ face.normalized_rotation_matrix
+        return Gaze(vector=vector, pitch=pitch, yaw=yaw)
 
 
 # The following code is provided in the implementation of L2CS from Abdelrahman et al.

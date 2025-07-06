@@ -28,7 +28,6 @@ class DatabaseManager:
             database_url = "sqlite:///gaze_estimation.db"
 
         self.engine = create_engine(database_url, echo=False)
-        self.logger = logging.getLogger(__name__)
 
         # Create tables if they don't exist
         self._create_tables()
@@ -36,7 +35,7 @@ class DatabaseManager:
     def _create_tables(self):
         """Create all database tables."""
         SQLModel.metadata.create_all(self.engine)
-        self.logger.info("Database tables created/verified")
+        logging.info("Database tables created/verified")
 
     @contextmanager
     def get_session(self):
@@ -47,7 +46,7 @@ class DatabaseManager:
             session.commit()
         except Exception as e:
             session.rollback()
-            self.logger.error(f"Database session error: {e}")
+            logging.error(f"Database session error: {e}")
             raise
         finally:
             session.close()
@@ -71,12 +70,12 @@ class DatabaseManager:
             ).first()
 
             if existing_video:
-                self.logger.info(f"Video already exists: {path}")
+                logging.info(f"Video already exists: {path}")
                 return existing_video
 
             video = Video(title=title, path=path)
             session.add(video)
-            self.logger.info(f"Inserted video: {title} ({video.id})")
+            logging.info(f"Inserted video: {title} ({video.id})")
             return video
 
     # Frame Management
@@ -99,7 +98,7 @@ class DatabaseManager:
             ).first()
 
             if existing_frame:
-                self.logger.warning(
+                logging.warning(
                     f"Frame already exists: video {video_id}, index {index}"
                 )
                 return existing_frame
@@ -137,8 +136,6 @@ class DatabaseManager:
         with self.get_session() as session:
             face = Face(**face_data)
             session.add(face)
-            session.commit()
-            session.refresh(face)
             return face
 
     def update_frame_face(self, frame_id: str, face_id: str, detector_type: str):
@@ -163,8 +160,6 @@ class DatabaseManager:
             else:
                 raise ValueError(f"Unknown detector type: {detector_type}")
 
-            session.commit()
-
     # Gaze Management
     def insert_gaze(self, gaze_data: Dict[str, Any]) -> Gaze:
         """
@@ -179,8 +174,6 @@ class DatabaseManager:
         with self.get_session() as session:
             gaze = Gaze(**gaze_data)
             session.add(gaze)
-            session.commit()
-            session.refresh(gaze)
             return gaze
 
     def update_face_gaze(self, face_id: str, gaze_id: str, gaze_type: str):
@@ -244,45 +237,7 @@ class DatabaseManager:
                 frame.dlib_face_id = None
                 frame.mediapipe_face_id = None
 
-            self.logger.info(f"Cleared processing data for video: {video_id}")
-
-    def get_video_stats(self, video_id: str) -> Dict[str, Any]:
-        """Get statistics for a specific video."""
-        with self.get_session() as session:
-            video = session.exec(select(Video).where(Video.id == video_id)).first()
-
-            if not video:
-                return {}
-
-            frames = session.exec(select(Frame).where(Frame.video_id == video_id)).all()
-
-            stats = {
-                "video_id": video_id,
-                "title": video.title,
-                "path": video.path,
-                "total_frames": len(frames),
-                "dlib_detections": sum(1 for f in frames if f.dlib_face_id),
-                "mediapipe_detections": sum(1 for f in frames if f.mediapipe_face_id),
-                "labeled_frames": sum(1 for f in frames if f.looks_label is not None),
-            }
-
-            return stats
-
-    def get_database_stats(self) -> Dict[str, Any]:
-        """Get overall database statistics."""
-        with self.get_session() as session:
-            videos = session.exec(select(Video)).all()
-            frames = session.exec(select(Frame)).all()
-            faces = session.exec(select(Face)).all()
-            gazes = session.exec(select(Gaze)).all()
-
-            return {
-                "total_videos": len(videos),
-                "total_frames": len(frames),
-                "total_faces": len(faces),
-                "total_gazes": len(gazes),
-                "videos": [self.get_video_stats(v.id) for v in videos],
-            }
+            logging.info(f"Cleared processing data for video: {video_id}")
 
 
 # Helper function to create a database manager instance
