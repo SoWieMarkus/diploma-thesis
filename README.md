@@ -3,6 +3,9 @@
 > [!NOTE]
 > The thesis is written in german.
 
+> [!NOTE]
+> During my thesis, I didn't have much time for code quality due to tight deadlines and many iterative changes. After completing my thesis, I refactored the project to improve maintainability and documentation. You can check out the original thesis version at this specific commit: [b3adb41](https://github.com/SoWieMarkus/diploma-thesis/tree/b3adb4154be1305a319b566e065639df9ee3277a)
+
 This repository contains the complete implementation and documentation of my diploma thesis submitted on December 4th, 2023, at the Technical University of Dresden (Technische Universität Dresden). The project develops a smartphone-based eye-tracking system designed specifically for cyclists, contributing to safer navigation app usage during bicycle rides.
 
 ## Screenshots
