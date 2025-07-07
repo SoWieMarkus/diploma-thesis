@@ -121,7 +121,7 @@ def process_video(video_path: str, args: argparse.Namespace):
     output_directory = os.path.join(args.output, video_name)
     io.create_output_directories(output_directory, FACE_DETECTORS, GAZE_DETECTORS)
 
-    db_video = database.insert_video(video_name, video_path)
+    db_video = database.insert_video(name=video_name, path=video_path)
     # TODO clear entries of videos
 
     frame_count = 0
@@ -135,12 +135,18 @@ def process_video(video_path: str, args: argparse.Namespace):
             progress.update(1)
             if frame_count % args.frame_step != 0:
                 continue
+
             process_frame(
                 frame_number=frame_count,
                 frame=frame,
                 meta=meta,
                 output_directory=output_directory,
                 args=args,
+            )
+            database.insert_frame(
+                video_id=db_video.id,
+                index=frame_count,
+                timestamp=meta.get_timestamp(frame_count),
             )
 
 
