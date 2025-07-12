@@ -10,6 +10,9 @@
     "lint": "npx @biomejs/biome check --write"
   },
   "private": true,
+    "overrides": {
+    "zod": "^4.0.0"
+  },
   "dependencies": {
     "@angular/cdk": "^20.0.5",
     "@angular/common": "^20.0.0",
