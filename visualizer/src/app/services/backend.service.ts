@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import type { Observable } from "rxjs";
-import type { z } from "zod";
+import type * as z from "zod";
 
 const BACKEND_URL = "http://localhost:3000/api";
 
