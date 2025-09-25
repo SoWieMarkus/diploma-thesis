@@ -35,7 +35,7 @@ COPY ./demo.py .
 COPY ./evaluate.py .
 COPY ./main.py .
 COPY ./visualizer.py .
-COPY ./data/assets .
+COPY ./data/assets ./data/assets
 COPY ./entrypoint.sh .
 
 RUN pip install --upgrade pip \
