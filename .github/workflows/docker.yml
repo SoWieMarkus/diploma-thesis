@@ -23,8 +23,6 @@ jobs:
           file: ./Dockerfile
           push: false
           tags: diploma:test
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Test Docker image can start
         run: |
