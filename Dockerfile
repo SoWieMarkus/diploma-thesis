@@ -1,5 +1,5 @@
 # --- Build Frontend stage ---
-FROM node:24.8.0-alpine AS builder
+FROM node:24.9.0-alpine AS builder
 
 WORKDIR /usr/src/app
 
