@@ -1,5 +1,5 @@
 dlib==20.0.0
-fastapi==0.121.0
+fastapi==0.121.1
 matplotlib==3.10.7
 mediapipe==0.10.21
 numpy>=1.26.4,<2.0.0
