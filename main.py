@@ -26,7 +26,6 @@ OUTPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "data", "output")
 
 FACE_DETECTORS: list[face_detection.FaceDetector] = [
     face_detection.MediapipeFaceDetector(),
-    face_detection.DlibFaceDetector(),
 ]
 
 GAZE_DETECTORS: list[gaze_detection.GazeDetector] = [

@@ -15,7 +15,6 @@ logging.basicConfig(
 
 FACE_DETECTORS = {
     "mediapipe": face_detection.MediapipeFaceDetector,
-    "dlib": face_detection.DlibFaceDetector,
 }
 GAZE_DETECTORS = {
     "eth-xgaze": gaze_detection.ETHXGazeDetector,
