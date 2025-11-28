@@ -7,5 +7,9 @@
   "assignees": [
     "SoWieMarkus"
   ],
-  "commitMessageAction": "Renovate: Update"
+  "commitMessageAction": "Renovate: Update",
+  "automerge": true,
+  "automergeType": "pr",
+  "automergeStrategy": "squash",
+  "platformAutomerge": true
 }
