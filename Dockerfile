@@ -9,7 +9,7 @@ COPY ./visualizer .
 RUN npm install
 RUN npm run build
 
-FROM python:3.10-slim
+FROM python:3.14-slim
 
 # Install system dependencies # Install system dependencies needed for building Python packages and OpenCV
 RUN apt-get update && apt-get install -y \
