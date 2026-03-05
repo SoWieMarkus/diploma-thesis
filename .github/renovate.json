@@ -8,6 +8,9 @@
   "assignees": [
     "SoWieMarkus"
   ],
+  "schedule": [
+    "before 8am on friday"
+  ],
   "commitMessageAction": "Renovate: Update",
   "automerge": true,
   "automergeType": "pr",
