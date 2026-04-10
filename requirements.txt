@@ -9,6 +9,6 @@ sqlmodel==0.0.38
 timm==1.0.26
 torch==2.11.0
 torchvision==0.26.0
-uvicorn==0.42.0
+uvicorn==0.44.0
 python-dotenv>=0.19.0
 tqdm>=4.62.0
