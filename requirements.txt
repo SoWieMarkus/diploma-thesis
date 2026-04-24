@@ -1,5 +1,5 @@
-fastapi==0.136.0
-matplotlib==3.10.8
+fastapi==0.136.1
+matplotlib==3.10.9
 mediapipe==0.10.33
 numpy==2.4.4
 opencv_contrib_python==4.13.0.92
@@ -9,6 +9,6 @@ sqlmodel==0.0.38
 timm==1.0.26
 torch==2.11.0
 torchvision==0.26.0
-uvicorn==0.44.0
+uvicorn==0.46.0
 python-dotenv>=0.19.0
 tqdm>=4.62.0
