@@ -2,7 +2,7 @@ fastapi==0.139.0
 matplotlib==3.11.0
 mediapipe==0.10.35
 numpy==2.5.0
-opencv_contrib_python==4.13.0.92
+opencv_contrib_python==5.0.0.93
 opencv_python==4.13.0.92
 Requests==2.34.2
 sqlmodel==0.0.39
