@@ -1,5 +1,5 @@
 # --- Build Frontend stage ---
-FROM node:24.21.0-alpine AS builder
+FROM node:24.22.0-alpine AS builder
 
 WORKDIR /usr/src/app
 
@@ -9,7 +9,7 @@ COPY ./visualizer .
 RUN npm install
 RUN npm run build
 
-FROM python:3.14-slim
+FROM python:3.15-slim
 
 # Install system dependencies # Install system dependencies needed for building Python packages and OpenCV
 RUN apt-get update && apt-get install -y \
