@@ -1,4 +1,4 @@
-fastapi==0.143.2
+fastapi==0.161.1
 matplotlib==3.11.2
 mediapipe==1.1.1
 numpy==2.5.4
