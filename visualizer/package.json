@@ -24,8 +24,8 @@
     "zod": "^4.0.0"
   },
   "devDependencies": {
-    "@angular/build": "^21.0.0",
-    "@angular/cli": "^21.0.0",
+    "@angular/build": "^22.0.0",
+    "@angular/cli": "^22.0.0",
     "@angular/compiler-cli": "^21.0.0",
     "@biomejs/biome": "^2.0.6",
     "@types/jasmine": "~7.0.0",
