@@ -26,6 +26,7 @@ const SHORTCUTS: [string, string][] = [
   ["Backspace", "clear looking label"],
 ];
 
+/** Keyboard driven labeling of every processed frame: looking, blink and landmark quality. */
 export function LabelPage() {
   const videoId = Number(useParams().videoId);
   const [search, setSearch] = useSearchParams();
