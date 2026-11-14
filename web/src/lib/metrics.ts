@@ -1,3 +1,4 @@
+/** Binary classification metrics, mirrors gaze_estimator/evaluation/metrics.py. */
 export interface Confusion {
   tp: number;
   fp: number;
