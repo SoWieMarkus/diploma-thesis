@@ -23,6 +23,7 @@ function rotationFromVector(r: Vec3): THREE.Matrix4 {
   );
 }
 
+/** Smartphone on the handlebar with the virtual display, highlighted when a gaze hits it. */
 function Phone({ display, active }: { display: Display; active: boolean }) {
   const { width, height, offset } = display;
   // Center of the display in OpenCV y is (height - 2 * offset) / 2, flipped for three.js.
