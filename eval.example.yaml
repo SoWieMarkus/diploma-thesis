@@ -1,0 +1,35 @@
+# Configuration of `gaze-evaluate`. Every key is optional, the values below are the defaults.
+# Usage: uv run gaze-evaluate --config eval.yaml
+
+# Faces further away from the camera than this (meters) are ignored (as in the thesis).
+max_distance: 1.0
+
+# Videos to leave out, with the reason. Decide this *before* looking at the results,
+# otherwise the evaluation is biased.
+exclude_videos: {}
+#  "6": "camera mounted upside down"
+
+# Frames labeled as blink count as "not looking" (thesis behaviour).
+blink_as_not_looking: true
+
+# Metric used to choose the display parameters in the grid search / cross-validation: f1 or mcc.
+optimize: f1
+
+# Physical smartphone display (meters) for the angle score and the ROC curves.
+# The camera sits `offset` below the top edge of the display.
+display: { width: 0.07, height: 0.15, offset: 0.01 }
+
+# Grid search over a square virtual display (thesis): size l and camera offset p in meters.
+# Values: min + (max - min) / steps * i for i < steps.
+size: { min: 0.0, max: 0.5, steps: 50 }
+offset: { min: -0.1, max: 0.5, steps: 50 }
+
+# EAR thresholds for the blink evaluation.
+ear: { min: 0.0, max: 1.0, steps: 100 }
+
+# Temporal majority filter over this many processed frames (<= 1 disables it).
+smoothing_window: 5
+
+per_video_plots: true
+formats: [png, pdf]
+dpi: 200
