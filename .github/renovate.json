@@ -1,7 +1,86 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended",
+    ":semanticCommitsDisabled",
+    ":label(dependencies)",
+    "helpers:pinGitHubActionDigests"
+  ],
   "assignees": ["SoWieMarkus"],
   "commitMessageAction": "Renovate: Update",
-  "lockFileMaintenance": { "enabled": true }
+  "timezone": "Europe/Berlin",
+  "schedule": ["before 8am on friday"],
+  "minimumReleaseAge": "3 days",
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "schedule": ["at any time"],
+    "minimumReleaseAge": null
+  },
+  "automergeStrategy": "squash",
+  "platformAutomerge": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 8am on the first day of the month"],
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "description": "Web: keep package.json ranges in sync with the lockfile",
+      "matchManagers": ["npm"],
+      "rangeStrategy": "bump",
+      "postUpdateOptions": ["pnpmDedupe"]
+    },
+    {
+      "description": "Web: one PR for all non-major updates",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "web non-major dependencies",
+      "groupSlug": "web-non-major",
+      "automerge": true
+    },
+    {
+      "description": "Python: one PR for all non-major updates",
+      "matchManagers": ["pep621"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "python non-major dependencies",
+      "groupSlug": "python-non-major",
+      "automerge": true
+    },
+    {
+      "description": "GitHub Actions: one PR for all non-major and digest updates",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
+      "groupName": "github actions",
+      "groupSlug": "github-actions",
+      "automerge": true
+    },
+    {
+      "description": "torch and torchvision have to move together",
+      "matchPackageNames": ["torch", "torchvision"],
+      "groupName": "pytorch",
+      "groupSlug": "pytorch"
+    },
+    {
+      "description": "three and its types have to move together",
+      "matchPackageNames": ["three", "@types/three"],
+      "groupName": "three.js",
+      "groupSlug": "threejs"
+    },
+    {
+      "description": "In 0.x versions a minor bump may break things, so these PRs need a review",
+      "matchCurrentValue": "/^(\\^|~|>=)?0\\./",
+      "matchUpdateTypes": ["minor"],
+      "automerge": false
+    },
+    {
+      "description": "mediapipe needs numpy 1.x",
+      "matchPackageNames": ["numpy"],
+      "allowedVersions": "<2"
+    },
+    {
+      "description": "Python is capped at <3.13 in pyproject.toml, so don't bump it in CI",
+      "matchDepNames": ["python"],
+      "allowedVersions": "<3.13"
+    }
+  ]
 }
