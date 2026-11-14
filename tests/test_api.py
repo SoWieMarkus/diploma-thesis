@@ -1,3 +1,5 @@
+"""Tests of the REST API against a database with synthetic data."""
+
 from fastapi.testclient import TestClient
 
 from gaze_estimator.api.app import create_app
