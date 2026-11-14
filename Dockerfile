@@ -5,8 +5,9 @@
 # The web build is platform independent, so it always runs natively (fast multi-arch builds).
 FROM --platform=$BUILDPLATFORM node:26-alpine AS web
 WORKDIR /web
-RUN corepack enable
+# corepack is no longer bundled with the node images; install the pnpm version from package.json.
 COPY web/package.json web/pnpm-lock.yaml ./
+RUN npm install -g "$(node -p "require('./package.json').packageManager")"
 RUN pnpm install --frozen-lockfile
 COPY web/ ./
 RUN pnpm build
