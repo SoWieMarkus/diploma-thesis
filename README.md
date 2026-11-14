@@ -1,12 +1,18 @@
 # Diploma Thesis: Conception and Evaluation of a Smartphone-based Eye-Tracking Solution for Use in Bicycle Rides with High Robustness against Changing Environmental Conditions
 
 > [!NOTE]
-> The thesis is written in german.
+> **This repository was reworked in 2026, long after the thesis was submitted.** The code you see here is a cleaned-up and extended version, not the code the thesis results are based on:
+>
+> - The pipeline was rebuilt as an installable Python package with three entry points: a live demo, batch processing of videos, and the evaluation. Results go into a SQLite database.
+> - The Angular/Express tools were replaced by a single React + three.js app that combines the 3D viewer and the labeling tool.
+> - The evaluation reproduces the method of the thesis and its graphs. It adds leave-one-video-out cross-validation, an angle-based score with ROC/PR curves, MCC and balanced accuracy, and temporal smoothing (see [Method and its limitations](#-method-and-its-limitations)).
+>
+> The version submitted with the thesis (December 4th, 2023) is commit [b3adb41](https://github.com/SoWieMarkus/diploma-thesis/tree/b3adb4154be1305a319b566e065639df9ee3277a).
 
 > [!NOTE]
-> During my thesis, I didn't have much time for code quality due to tight deadlines and many iterative changes. After completing my thesis, I refactored the project to improve maintainability and documentation. You can check out the original thesis version at this specific commit: [b3adb41](https://github.com/SoWieMarkus/diploma-thesis/tree/b3adb4154be1305a319b566e065639df9ee3277a)
+> The thesis itself ([thesis.pdf](./thesis.pdf), LaTeX sources in [thesis/](./thesis)) is written in German.
 
-This repository contains the complete implementation and documentation of my diploma thesis submitted on December 4th, 2023, at the Technical University of Dresden (Technische Universität Dresden). The project develops a smartphone-based eye-tracking system designed specifically for cyclists, contributing to safer navigation app usage during bicycle rides.
+This repository contains the implementation and documentation of my diploma thesis, submitted at the Technical University of Dresden (Technische Universität Dresden) as part of the [PrioBike](https://priobike.de) project of the city of Hamburg. It is a smartphone-based eye-tracking system for cyclists. It measures how often the cyclist looks at the smartphone, and so how much a navigation app distracts them.
 
 ## Screenshots
 
@@ -14,184 +20,158 @@ This repository contains the complete implementation and documentation of my dip
 ![Annotations](./thesis/images/evaluation/tool.jpg)
 ![Example Video](./examples/example.gif)
 
-## 🚀 Try it yourself
+## 🧭 How it works
 
-### Prerequisites
-
-- [Download Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Windows only - C++ Build Tools)
-- [Download CMake](https://cmake.org/download/)
-- [Download Python](https://www.python.org/downloads/)
-- [Download Node.js](https://nodejs.org/)
-- Install Angular CLI with `npm install -g @angular/cli`
-
-Create a `.env` file based on the provided example.
-
-### Set up Python Environment
-
-```bash
-# Create virtual environment
-python -m venv .venv
-
-# Activate virtual environment
-# Windows:
-.venv\Scripts\activate
-# macOS/Linux:
-source .venv/bin/activate
-
-# Install Python dependencies
-pip install -r requirements.txt
+```
+videos ──► gaze-process ──► SQLite (frames, faces, gazes) ──► gaze-serve + web app (view & label)
+                                         │                                   │
+                                         └───────────► gaze-evaluate ◄───────┘ labels
+                                                      (graphs + tables)
 ```
 
-### Run demo.py
+1. **Face detection**: [MediaPipe](https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker) (468 landmarks) or [dlib](http://dlib.net/) (68 landmarks).
+2. **Head pose**: a generic 3D face model is fitted to the landmarks (`solvePnP`). This gives the face position in camera coordinates and the head rotation.
+3. **Gaze estimation**: the face image is normalized ([Zhang et al. 2018](https://dl.acm.org/doi/10.1145/3204493.3204548)) and fed into a CNN that predicts pitch and yaw:
+   - `eth-xgaze`: ResNet-18 trained on [ETH-XGaze](https://ait.ethz.ch/xgaze)
+   - `l2cs-gaze360`: [L2CS-Net](https://github.com/Ahmednull/L2CS-Net) trained on Gaze360
+   - `mpiifacegaze`: ResNet trained on [MPIIFaceGaze](https://www.mpi-inf.mpg.de/departments/computer-vision-and-machine-learning/research/gaze-based-human-computer-interaction/its-written-all-over-your-face-full-face-appearance-based-gaze-estimation)
+   - `head-rotation`: baseline that assumes the gaze follows the head
+4. **Looking at the display?** The smartphone films with its front camera, so its display lies in the camera plane `z = 0`. The gaze ray from the face center is intersected with that plane. A hit on a virtual display rectangle counts as "looking at the smartphone".
 
-The demo script supports various configuration options:
+## 🚀 Setup
 
-```bash
-python demo.py
-
-# Use different face detector (mediapipe or dlib)
-python demo.py --face_detector mediapipe
-
-# Use different gaze estimation model
-python demo.py --gaze_detector eth-xgaze
-# Available options: eth-xgaze, gaze360, mpiifacegaze, head-rotation
-
-# Use specific camera (if you have multiple cameras)
-python demo.py --cam 1
-
-# Customize visualization
-python demo.py --draw_important_landmarks    # Show only key facial landmarks
-python demo.py --skip_landmarks             # Hide facial landmarks
-python demo.py --skip_gaze_vector          # Hide gaze direction vector
-```
-
-## 📁 Repository Structure
-
-This repository is organized into the following main components:
-
-### **data/**
-
-Data storage and processing directory
-
-- **`assets/`** - Pre-trained models and templates (`.pth`, `.pkl` files, 3D face templates)
-- **`input/`** - Place your video files here for gaze detection analysis
-- **`output/`** - Generated and processed images from videos and evaluation results
-
-### **database/**
-
-Database management package
-
-- Python package for database models and operations
-- SQLModel-based schema for storing video frames, face detections, and gaze estimations
-- Supports SQLite and PostgreSQL databases
-
-### **evaluation/**
-
-Analysis and evaluation tools
-
-- Python scripts to evaluate gaze estimation algorithm performance
-- Statistical analysis tools for measuring accuracy and robustness
-- Performance benchmarking utilities
-
-### **examples/**
-
-Examples to showcase the project.
-
-### **gaze_estimator/**
-
-Core gaze detection package
-
-- Main Python package implementing the eye-tracking algorithms
-- Face detection using MediaPipe and dlib
-- Gaze estimation with ETH-XGaze, Gaze360, MPIIFaceGaze, and head-rotation models
-- Real-time processing capabilities
-
-### **thesis/**
-
-- LaTeX source code for the written thesis document
-- Complete academic documentation and research findings
-- Figures, tables, and bibliography
-
-### **visualizer/**
-
-Interactive web application for data visualization and labeling
-
-- Angular web application with Three.js for 3D visualization
-- Frame labeling interface for manual annotation
-- Interactive 3D gaze direction visualization
-- Real-time data analysis dashboard
-
-## 📹 Video Analysis Workflow
-
-To analyze your own videos and evaluate gaze estimation performance, follow this workflow:
-
-### Step 1: Prepare Video Data
-
-Place your video files (`.mp4`) in the input directory:
+Requirements: [uv](https://docs.astral.sh/uv/) and, for the web app, [Node.js](https://nodejs.org/) 22+ with [pnpm](https://pnpm.io/).
 
 ```bash
-./data/input/your_video.mp4
+# CPU version of PyTorch (use --extra cu128 instead for an NVIDIA GPU)
+uv sync --extra cpu
+
+# Optional: the dlib face detector. dlib is compiled from source, which needs CMake and a C++
+# compiler (on Windows the Visual Studio Build Tools) and takes a while.
+uv sync --extra cpu --extra dlib
+
+# Download the model weights that are missing in data/assets (see data/assets/README.md)
+uv run gaze-download-assets
 ```
 
-### Step 2: Extract and Process Frames
+Without the `dlib` extra, everything works except the `dlib` face detector. Choose the others explicitly, e.g. `--faces mediapipe`.
 
-Run the main processing script to extract frames and perform initial gaze estimation:
+## 🎥 1. Live demo
+
+Opens the webcam and draws landmarks, head axes, the gaze vector and a "looking at display" indicator.
 
 ```bash
-python main.py
+uv run gaze-demo --face mediapipe --gaze eth-xgaze
+uv run gaze-demo --face dlib --gaze l2cs-gaze360 --camera 1 --mirror
 ```
 
-This will:
+| Option                       | Description                                                                          |
+| ---------------------------- | ------------------------------------------------------------------------------------ |
+| `--face`                     | `mediapipe` or `dlib`                                                                |
+| `--gaze`                     | `eth-xgaze`, `l2cs-gaze360`, `mpiifacegaze` or `head-rotation`                       |
+| `--camera`                   | camera index or path of a video file                                                 |
+| `--profile`                  | camera intrinsics, see [camera.example.yaml](./camera.example.yaml)                  |
+| `--display W H OFFSET`       | virtual display in meters for the indicator (default: `0.07 0.15 0.01`)             |
+| `--mirror`                   | mirror the preview                                                                    |
 
-- Extract all frames from your videos
-- Detect faces using MediaPipe and dlib
-- Estimate gaze directions with multiple models
-- Store results in the database
-- Generate processed images in `./data/output/`
+Keys: `q` quits, `l` toggles the landmarks.
 
-### Step 3: Start the Visualizer Application
+## ⚙️ 2. Process videos
 
-Launch the web-based labeling interface:
-
-TODO
-
-Access the visualizer at: `http://localhost:4200`
-
-### Step 4: Manual Frame Labeling
-
-Using the web interface, manually label each extracted frame with ground truth data:
-
-#### **Gaze Direction Labels:**
-
-- **0** - Person is **NOT** looking at the smartphone
-- **1** - Person **IS** looking at the smartphone
-- **2** - Eyes or face not visible/detectable
-
-#### **Eye State Labels:**
-
-- **0** - Eyes **closed**
-- **1** - Eyes **open**
-- **2** - Eyes **not detectable**
-
-#### **Face Detection Quality:**
-
-- **0** - **Poor quality** (landmarks don't match at all)
-- **1** - **Medium quality** (landmarks match sometimes)
-- **2** - **Good quality** (landmarks match perfectly)
-
-### Step 5: Performance Evaluation
-
-After completing the manual labeling, run the evaluation script:
+Put the videos into `data/input/`, then run:
 
 ```bash
-python evaluate.py
+uv run gaze-process --step 5
 ```
 
-**Evaluation metrics calculated:**
+Every `--step`-th frame is saved as a JPG in `data/output/<video>/` and analyzed with **every face detector and every gaze model**. The results (landmarks, 3D head pose, gaze vectors, runtimes, image statistics) are stored in `data/gaze.db`. The command can be resumed: running it again only computes what is missing (new videos, new models, a smaller step). `--faces` and `--gazes` restrict the models, and `--force` recomputes them.
 
-- **Precision, Recall, F1-Score** for gaze direction classification
-- **Accuracy** for eye state detection
-- **Detection rates** for face recognition quality
+## 🔍 3. View and label
+
+```bash
+uv run gaze-serve                 # API on http://127.0.0.1:8000
+cd web && pnpm install && pnpm dev   # web app on http://localhost:5173
+```
+
+Alternatively, run `pnpm build` once in `web/`. After that, `gaze-serve` also hosts the app on port 8000.
+
+- **Viewer**: a 3D scene with the camera, the virtual smartphone display, the face point cloud, the head axes and the gaze rays of all models. Next to it is the frame with the landmarks drawn on top, plus a timeline of ground truth and prediction. Display size and offset can be tuned with sliders. F1, MCC and balanced accuracy of the current video update live.
+- **Labeling**: keyboard driven.
+  - `J`/`N`/`U`: looking at the display, not looking, unsure.
+  - `B`: blink.
+  - `1`/`2`/`3`: landmark quality (good, inaccurate, wrong) for each face detector. `Tab` switches the detector.
+  - `Space` jumps to the next unlabeled frame.
+
+| Label           | Values                                                                 |
+| --------------- | ---------------------------------------------------------------------- |
+| `label_looking` | `0` not looking, `1` looking, `2` unsure (excluded from the evaluation) |
+| `label_blink`   | `true` eyes closed, `false` eyes open                                  |
+| `label_quality` | `0` good, `1` inaccurate, `2` wrong (per face detector)                |
+
+## 📊 4. Evaluate
+
+```bash
+uv run gaze-evaluate --config eval.yaml   # config optional, see eval.example.yaml
+```
+
+Graphs (PNG + PDF) and tables (CSV + LaTeX) are written to `data/plots/`:
+
+| Folder              | Content                                                                                                     |
+| ------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `grid/`             | F1 heatmaps over display size `l` and offset `p` (per video and averaged), F1 vs. display size *(thesis)*   |
+| `timelines/`        | strips of ground truth / prediction / landmark quality per video and model *(thesis)*                       |
+| `faces/`            | landmark quality bars; distance, brightness, contrast and sharpness per frame; distance histogram *(thesis)* |
+| `blinks/`           | F1 of blink detection vs. EAR threshold *(thesis)*                                                           |
+| `angle/`            | ROC and precision-recall curves of the angle-to-display score, angle distributions                         |
+| `cross_validation/` | leave-one-video-out F1/MCC per held-out video, confusion matrices, effect of temporal smoothing             |
+| `summary/`          | comparison of all face detector + gaze model combinations                                                  |
+| `tables/`           | `summary`, `cross_validation_folds`, `face_detection`, `blinks`                                            |
+
+## 🧪 Method and its limitations
+
+What the rework changes, and what is still a limitation:
+
+1. **Overfitting of the display parameters.** In the thesis, the size and offset of the virtual display were chosen by a grid search on the same videos the F1 score was reported for. Some videos were also left out after looking at the results. Both make the reported F1 optimistic. `gaze-evaluate` still reproduces the thesis numbers (`thesis_f1`). It also reports **leave-one-video-out cross-validation** (`cv_*`): the parameters are tuned on all other videos and tested on the held-out one. Excluded videos have to be listed in the config together with a reason.
+2. **A hard hit/miss decision hides how good a model is.** The **angle between the gaze ray and the display** is a continuous score. It gives ROC/PR curves and AUC values, so models can be compared without choosing any threshold.
+3. **Class imbalance.** Cyclists mostly do *not* look at the phone, so the F1 score alone can be misleading. MCC, balanced accuracy and confusion matrices are reported too.
+4. **Camera intrinsics are guessed.** Without a calibration, the focal length is assumed to be the image width, as in the thesis. This affects the estimated distance and therefore where the gaze ray meets the camera plane. Calibrated intrinsics (or at least the field of view) can be passed as a camera profile.
+5. **Frames are judged independently.** A glance at the phone lasts several frames, so an optional temporal majority filter is evaluated as a separate variant.
+6. **Remaining limitations.**
+   - The models were trained on people sitting in front of a camera, not on cyclists filmed from below.
+   - Sunglasses, night rides and extreme head rotations remain hard.
+   - The display is assumed to lie in the camera plane (front camera, phone held upright).
+
+## 🧑‍💻 Development
+
+```bash
+uv sync --extra cpu --group dev
+uv run pytest
+uv run ruff check . && uv run ruff format .
+
+cd web
+pnpm lint && pnpm format && pnpm build
+```
+
+The CI (`.github/workflows/ci.yml`) runs the same checks. It skips dlib, because building it takes ages and its tests are skipped when it is missing.
+
+Environment variables: `GAZE_DATA_DIR`, `GAZE_ASSETS_DIR`, `GAZE_DATABASE` (default locations) and `GAZE_DEVICE` (e.g. `cpu` to force the CPU).
+
+## 📁 Repository structure
+
+| Path                               | Content                                                                    |
+| ---------------------------------- | -------------------------------------------------------------------------- |
+| `gaze_estimator/core/`             | camera intrinsics, geometry (gaze vectors, display intersection, angles)  |
+| `gaze_estimator/faces/`            | face detectors and head pose estimation                                    |
+| `gaze_estimator/gaze/`             | gaze models                                                                |
+| `gaze_estimator/db/`               | SQLite schema (SQLModel)                                                   |
+| `gaze_estimator/pipeline/`         | batch processing of videos                                                 |
+| `gaze_estimator/evaluation/`       | grid search, cross-validation, metrics, graphs, tables                     |
+| `gaze_estimator/api/`              | FastAPI backend of the web app                                             |
+| `gaze_estimator/cli/`              | entry points (`gaze-demo`, `gaze-process`, `gaze-serve`, `gaze-evaluate`)  |
+| `web/`                             | React + three.js viewer and labeling tool                                  |
+| `data/assets/`                     | model weights and 3D face templates                                        |
+| `data/input/`, `data/output/`      | your videos and the extracted frames                                       |
+| `thesis/`, `thesis.pdf`            | the thesis (German)                                                        |
 
 ## Abstract
 
