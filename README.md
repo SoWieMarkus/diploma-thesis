@@ -16,6 +16,9 @@ This repository contains the implementation and documentation of my diploma thes
 
 ## Screenshots
 
+> [!WARNING]
+> I was young and stupid and did not wear a helmet during the test rides. Please don't copy that: **always wear a helmet when you ride a bike.**
+
 ![Face landmarks and gaze vector on video 01](./examples/demo.gif)
 
 ![Videos overview](./examples/visualizer_front_page.png)
