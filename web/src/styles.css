@@ -51,6 +51,7 @@ h3 {
 
 .app {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto 1fr;
   height: 100%;
 }
@@ -136,7 +137,7 @@ h3 {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
   gap: 16px;
 }
 
@@ -523,12 +524,12 @@ label.field {
 
 @media (max-width: 900px) {
   .labeler {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: minmax(280px, 55vh) auto auto;
     height: auto;
   }
   .viewer {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     height: auto;
   }
   .viewer .scene {
@@ -536,5 +537,23 @@ label.field {
   }
   .viewer .right {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding: 10px 16px;
+  }
+  .topbar .spacer,
+  .topbar > .muted {
+    display: none;
+  }
+  .page {
+    padding: 16px;
+  }
+  .progress {
+    grid-template-columns: 110px 1fr 48px;
   }
 }
