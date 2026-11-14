@@ -1,0 +1,12 @@
+# Live preview: `docker compose up -d --build`, then open http://localhost:8000.
+# ./data must contain gaze.db and the frame folders it references (output/<video>/*.jpg).
+# The folder is mounted read-write: labels are saved to the database, and SQLite needs to write
+# its -wal/-shm files next to it.
+services:
+  gaze:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/data

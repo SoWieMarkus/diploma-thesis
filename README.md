@@ -93,6 +93,15 @@ cd web && pnpm install && pnpm dev   # web app on http://localhost:5173
 
 Alternatively, run `pnpm build` once in `web/`. After that, `gaze-serve` also hosts the app on port 8000.
 
+To host it as a live preview, use Docker. The image only contains the web app and the API (no models). Mount a folder holding `gaze.db` and the frame images it references (`output/<video>/*.jpg`) into `/data`. Anyone with access can change the labels, so it is meant as a demo.
+
+```bash
+docker compose up -d --build   # mounts ./data, serves on http://localhost:8000
+# or: docker build -t gaze-preview . && docker run -d -p 8000:8000 -v /path/to/data:/data gaze-preview
+```
+
+Every push to `main` publishes the image as `ghcr.io/sowiemarkus/diploma-thesis:latest`.
+
 - **Viewer**: a 3D scene with the camera, the virtual smartphone display, the face point cloud, the head axes and the gaze rays of all models. Next to it is the frame with the landmarks drawn on top, plus a timeline of ground truth and prediction. Display size and offset can be tuned with sliders. F1, MCC and balanced accuracy of the current video update live.
 - **Labeling**: keyboard driven.
   - `J`/`N`/`U`: looking at the display, not looking, unsure.
