@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useParams } from "react-router";
 
+/** App shell: top bar with navigation (per-video links only inside a video) and the page outlet. */
 export function Layout() {
   const { videoId } = useParams();
   return (
