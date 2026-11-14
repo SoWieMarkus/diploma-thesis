@@ -1,5 +1,7 @@
 # Diploma Thesis: Conception and Evaluation of a Smartphone-based Eye-Tracking Solution for Use in Bicycle Rides with High Robustness against Changing Environmental Conditions
 
+Checkout a demo here: https://thesis.sowiemark.us/
+
 > [!NOTE]
 > **This repository was reworked in 2026, long after the thesis was submitted.** The code you see here is a cleaned-up and extended version, not the code the thesis results are based on:
 >
