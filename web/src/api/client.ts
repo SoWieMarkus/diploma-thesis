@@ -10,6 +10,7 @@ import {
   type FrameSummary,
 } from "./schemas";
 
+/** Fetch JSON from the API and validate it against the zod schema. */
 async function request<T>(schema: z.ZodType<T>, url: string, init?: RequestInit): Promise<T> {
   const response = await fetch(url, {
     ...init,
