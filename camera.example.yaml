@@ -1,0 +1,16 @@
+# Camera profile (intrinsics) for `gaze-process --profile` and `gaze-demo --profile`.
+# Alternatively place it next to a video as `<video name>.camera.yaml`.
+# Without a profile, focal length = image width is assumed (as in the thesis).
+
+# Option 1: calibrated intrinsics in pixels, for the resolution given by width/height.
+# They are rescaled automatically if a video has another resolution.
+width: 1920
+height: 1080
+fx: 1450.0
+fy: 1450.0
+cx: 960.0
+cy: 540.0
+distortion: [0.0, 0.0, 0.0, 0.0, 0.0]
+
+# Option 2: only the horizontal field of view in degrees (overrides the values above).
+# hfov_deg: 68
