@@ -1,20 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    "customManagers:biomeVersions",
-    "group:allNonMajor"
-  ],
-  "assignees": [
-    "SoWieMarkus"
-  ],
-  "schedule": [
-    "before 8am on friday"
-  ],
-  "semanticCommits": "disabled",
+  "extends": ["config:recommended"],
+  "assignees": ["SoWieMarkus"],
   "commitMessageAction": "Renovate: Update",
-  "automerge": true,
-  "automergeType": "pr",
-  "automergeStrategy": "squash",
-  "platformAutomerge": true
+  "lockFileMaintenance": { "enabled": true }
 }

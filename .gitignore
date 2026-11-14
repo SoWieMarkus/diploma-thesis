@@ -1,8 +1,16 @@
+# Python
 .venv
-node_modules
 __pycache__
 .pytest_cache
-.env
-dev.db
+.ruff_cache
+*.egg-info
 
-_dep
+# Node
+node_modules
+
+# Data produced by the pipeline
+*.db
+*.db-shm
+*.db-wal
+data/plots/
+.env
