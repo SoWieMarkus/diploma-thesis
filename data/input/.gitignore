@@ -1,5 +1,4 @@
-# Ignore everything in this directory
+# Videos to process (`gaze-process` reads them from here).
+# Ignore everything in this directory, except this .gitignore file.
 *
-
-# But don't ignore this .gitignore file
 !.gitignore
