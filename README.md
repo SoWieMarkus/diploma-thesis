@@ -12,7 +12,7 @@
 > [!NOTE]
 > The thesis itself ([thesis.pdf](./thesis.pdf), LaTeX sources in [thesis/](./thesis)) is written in German.
 
-This repository contains the implementation and documentation of my diploma thesis, submitted at the Technical University of Dresden (Technische Universität Dresden) as part of the [PrioBike](https://priobike.de) project of the city of Hamburg. It is a smartphone-based eye-tracking system for cyclists. It measures how often the cyclist looks at the smartphone, and so how much a navigation app distracts them.
+This repository contains the implementation and documentation of my diploma thesis, submitted at the Technical University of Dresden (Technische Universität Dresden) as part of the [PrioBike](https://www.flow-d.de/projekte/priobike-hh-unterauftrag-der-tu-dresden/) project of the city of Hamburg. It is a smartphone-based eye-tracking system for cyclists. It measures how often the cyclist looks at the smartphone, and so how much a navigation app distracts them.
 
 ## Screenshots
 
