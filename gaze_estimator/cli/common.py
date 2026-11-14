@@ -1,3 +1,5 @@
+"""Shared helpers of the command line entry points."""
+
 import logging
 
 
