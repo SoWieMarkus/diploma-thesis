@@ -3,7 +3,7 @@
 # frame images are not part of the image, mount them into /data (see docker-compose.yml).
 
 # The web build is platform independent, so it always runs natively (fast multi-arch builds).
-FROM --platform=$BUILDPLATFORM node:24-alpine AS web
+FROM --platform=$BUILDPLATFORM node:26-alpine AS web
 WORKDIR /web
 RUN corepack enable
 COPY web/package.json web/pnpm-lock.yaml ./
