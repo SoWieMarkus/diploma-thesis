@@ -8,7 +8,7 @@ export function Layout() {
       <header className="topbar">
         <NavLink to="/" className="brand">
           <img src="/favicon.svg" alt="" />
-          Gaze Estimator
+          Gaze Estimator-Inator
         </NavLink>
         <nav>
           <NavLink to="/" end>

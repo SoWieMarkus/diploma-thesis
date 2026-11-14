@@ -32,7 +32,7 @@ def create_app(database: Path, web_dist: Path | None = WEB_DIST_DIR) -> FastAPI:
     engine = create_db_engine(database, create=False)
     data_root = database.parent
 
-    app = FastAPI(title="Gaze Estimator", version="2.0.0")
+    app = FastAPI(title="Gaze Estimator-Inator", version="2.0.0")
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
