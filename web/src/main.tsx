@@ -12,6 +12,7 @@ const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000, refetchOnWindowFocus: false } },
 });
 
+// Dashboard with all videos, plus a viewer and a labeling page per video.
 const router = createBrowserRouter([
   {
     element: <Layout />,
