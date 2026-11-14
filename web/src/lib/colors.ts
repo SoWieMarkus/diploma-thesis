@@ -5,13 +5,13 @@ export const MODEL_COLORS: Record<string, string> = {
   "head-rotation": "#a78bfa",
 };
 
-export const modelColor = (model: string) => MODEL_COLORS[model] ?? "#e2e8f0";
+export const modelColor = (model: string) => MODEL_COLORS[model] ?? "#ececec";
 
 export const COLORS = {
   positive: "#4ade80",
   negative: "#f87171",
   warning: "#fbbf24",
-  unsure: "#64748b",
-  missing: "#1e293b",
-  accent: "#5eead4",
+  unsure: "#737373",
+  missing: "#2e2e2e",
+  accent: "#3ecf8e",
 };

@@ -160,7 +160,7 @@ export function ViewerPage() {
         label: "Prediction",
         colors: frames.map((f, i) =>
           f.detected[faceName ?? ""] === false
-            ? "#0f172a"
+            ? "#171717"
             : predictions[i]
               ? COLORS.positive
               : COLORS.negative,

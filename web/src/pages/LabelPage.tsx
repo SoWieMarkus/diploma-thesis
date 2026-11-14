@@ -135,7 +135,7 @@ export function LabelPage() {
       {
         label: "Blink",
         colors: frames.map((f) =>
-          f.label_blink === null ? null : f.label_blink ? COLORS.warning : "#334155",
+          f.label_blink === null ? null : f.label_blink ? COLORS.warning : "#3a3a3a",
         ),
       },
       ...detectors.map((d) => ({

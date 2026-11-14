@@ -43,14 +43,14 @@ export function FrameImage({
             width={face.bbox[2] - face.bbox[0]}
             height={face.bbox[3] - face.bbox[1]}
             fill="none"
-            stroke="rgba(226,232,240,0.5)"
+            stroke="rgba(236,236,236,0.5)"
             strokeWidth={radius / 2}
             strokeDasharray={`${radius * 2} ${radius}`}
           />
         )}
         {showLandmarks &&
           face?.landmarks_2d?.map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r={radius} fill="#5eead4" opacity={0.85} />
+            <circle key={i} cx={x} cy={y} r={radius} fill="#67e8f9" opacity={0.85} />
           ))}
         {center &&
           face?.gazes

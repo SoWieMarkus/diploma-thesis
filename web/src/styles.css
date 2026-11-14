@@ -1,16 +1,16 @@
 :root {
-  --bg: #0b0f17;
-  --bg-elevated: #121826;
-  --bg-muted: #182032;
-  --border: #243049;
-  --text: #e2e8f0;
-  --text-muted: #8b98b0;
-  --accent: #5eead4;
-  --accent-strong: #2dd4bf;
+  --bg: #1f1f1f;
+  --bg-elevated: #272727;
+  --bg-muted: #303030;
+  --border: #3a3a3a;
+  --text: #ececec;
+  --text-muted: #9e9e9e;
+  --accent: #3ecf8e;
+  --accent-strong: #2bb673;
   --positive: #4ade80;
   --negative: #f87171;
   --warning: #fbbf24;
-  --unsure: #94a3b8;
+  --unsure: #a3a3a3;
   --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
   color-scheme: dark;
@@ -204,7 +204,7 @@ h3 {
 .button.primary {
   background: var(--accent-strong);
   border-color: var(--accent-strong);
-  color: #04201c;
+  color: #0b2617;
   font-weight: 600;
 }
 
@@ -316,7 +316,7 @@ label.field {
   display: grid;
   gap: 4px;
   padding: 8px 10px;
-  background: rgba(11, 15, 23, 0.75);
+  background: rgba(31, 31, 31, 0.8);
   backdrop-filter: blur(6px);
   font-size: 12px;
 }
@@ -459,6 +459,31 @@ label.field {
 
 .labeler .bottom {
   grid-column: 1 / -1;
+}
+
+/* ---------- sidebars: one box, sections separated by lines instead of nested cards ---------- */
+
+.viewer .sidebar,
+.viewer .right,
+.labeler .panel {
+  align-content: start;
+  gap: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+.viewer .sidebar > .card,
+.viewer .right > .card,
+.labeler .panel > .card {
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border);
+}
+
+.viewer .sidebar > .card:last-child,
+.viewer .right > .card:last-child,
+.labeler .panel > .card:last-child {
+  border-bottom: none;
 }
 
 .shortcut-list {

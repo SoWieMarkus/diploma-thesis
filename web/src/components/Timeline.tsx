@@ -39,7 +39,7 @@ export function Timeline({ frames, rows, current, onSelect }: Props) {
 
     rows.forEach((row, r) => {
       const y = r * rowHeight;
-      ctx.fillStyle = "#8b98b0";
+      ctx.fillStyle = "#9e9e9e";
       ctx.fillText(row.label, 8 * dpr, y + rowHeight / 2);
       row.colors.forEach((color, i) => {
         ctx.fillStyle = color ?? COLORS.missing;
@@ -86,7 +86,7 @@ export const lookingColor = (label: number | null | undefined, blink?: boolean |
 };
 
 export const qualityColor = (label: number | null | undefined, detected: boolean | undefined) => {
-  if (detected === false) return "#0f172a";
+  if (detected === false) return "#171717";
   if (label === null || label === undefined) return null;
   return [COLORS.positive, COLORS.warning, COLORS.negative][label] ?? null;
 };
