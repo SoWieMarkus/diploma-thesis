@@ -43,7 +43,8 @@ This repository contains the implementation and documentation of my diploma thes
 Requirements: [uv](https://docs.astral.sh/uv/) and, for the web app, [Node.js](https://nodejs.org/) 22+ with [pnpm](https://pnpm.io/).
 
 ```bash
-# CPU version of PyTorch (use --extra cu128 instead for an NVIDIA GPU)
+# CPU version of PyTorch. For an NVIDIA GPU on Linux use --extra cuda instead. On Windows, PyPI
+# only has CPU builds: install a CUDA build by hand from https://pytorch.org/get-started/locally/
 uv sync --extra cpu
 
 # Optional: the dlib face detector. dlib is compiled from source, which needs CMake and a C++

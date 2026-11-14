@@ -27,9 +27,12 @@ dependencies = [
 # dlib has no wheels for most platforms and is compiled from source (needs CMake + a C++ compiler).
 # It is optional so the CI and quick setups do not have to build it.
 dlib = ["dlib>=19.24"]
-# Pick exactly one torch backend: `uv sync --extra cpu` or `uv sync --extra cu128`.
+# Pick exactly one torch backend: `uv sync --extra cpu` or `uv sync --extra cuda`.
+# `cuda` is the regular PyPI build, which ships CUDA on Linux (and is CPU-only on Windows/macOS).
+# It deliberately avoids a CUDA-specific index like download.pytorch.org/whl/cu128, because those
+# stop receiving new torch versions after a few releases.
 cpu = ["torch>=2.7", "torchvision>=0.22"]
-cu128 = ["torch>=2.7", "torchvision>=0.22"]
+cuda = ["torch>=2.7", "torchvision>=0.22"]
 
 [project.scripts]
 gaze-demo = "gaze_estimator.cli.demo:main"
@@ -49,26 +52,15 @@ build-backend = "hatchling.build"
 packages = ["gaze_estimator"]
 
 [tool.uv]
-conflicts = [[{ extra = "cpu" }, { extra = "cu128" }]]
+conflicts = [[{ extra = "cpu" }, { extra = "cuda" }]]
 
 [tool.uv.sources]
-torch = [
-  { index = "pytorch-cpu", extra = "cpu" },
-  { index = "pytorch-cu128", extra = "cu128" },
-]
-torchvision = [
-  { index = "pytorch-cpu", extra = "cpu" },
-  { index = "pytorch-cu128", extra = "cu128" },
-]
+torch = [{ index = "pytorch-cpu", extra = "cpu" }]
+torchvision = [{ index = "pytorch-cpu", extra = "cpu" }]
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
-explicit = true
-
-[[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
 explicit = true
 
 [tool.ruff]
