@@ -20,14 +20,7 @@ This repository contains the implementation and documentation of my diploma thes
 ![Annotations](./thesis/images/evaluation/tool.jpg)
 ![Example Video](./examples/example.gif)
 
-## 🧭 How it works
-
-```
-videos ──► gaze-process ──► SQLite (frames, faces, gazes) ──► gaze-serve + web app (view & label)
-                                         │                                   │
-                                         └───────────► gaze-evaluate ◄───────┘ labels
-                                                      (graphs + tables)
-```
+## How it works
 
 1. **Face detection**: [MediaPipe](https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker) (468 landmarks) or [dlib](http://dlib.net/) (68 landmarks).
 2. **Head pose**: a generic 3D face model is fitted to the landmarks (`solvePnP`). This gives the face position in camera coordinates and the head rotation.
@@ -38,7 +31,7 @@ videos ──► gaze-process ──► SQLite (frames, faces, gazes) ──► 
    - `head-rotation`: baseline that assumes the gaze follows the head
 4. **Looking at the display?** The smartphone films with its front camera, so its display lies in the camera plane `z = 0`. The gaze ray from the face center is intersected with that plane. A hit on a virtual display rectangle counts as "looking at the smartphone".
 
-## 🚀 Setup
+## Setup
 
 Requirements: [uv](https://docs.astral.sh/uv/) and, for the web app, [Node.js](https://nodejs.org/) 22+ with [pnpm](https://pnpm.io/).
 
@@ -56,7 +49,7 @@ uv run gaze-download-assets
 
 Without the `dlib` extra, everything works except the `dlib` face detector. Choose the others explicitly, e.g. `--faces mediapipe`.
 
-## 🎥 1. Live demo
+## 1. Live demo
 
 Opens the webcam and draws landmarks, head axes, the gaze vector and a "looking at display" indicator.
 
@@ -76,7 +69,7 @@ uv run gaze-demo --face dlib --gaze l2cs-gaze360 --camera 1 --mirror
 
 Keys: `q` quits, `l` toggles the landmarks.
 
-## ⚙️ 2. Process videos
+## 2. Process videos
 
 Put the videos into `data/input/`, then run:
 
@@ -86,7 +79,7 @@ uv run gaze-process --step 5
 
 Every `--step`-th frame is saved as a JPG in `data/output/<video>/` and analyzed with **every face detector and every gaze model**. The results (landmarks, 3D head pose, gaze vectors, runtimes, image statistics) are stored in `data/gaze.db`. The command can be resumed: running it again only computes what is missing (new videos, new models, a smaller step). `--faces` and `--gazes` restrict the models, and `--force` recomputes them.
 
-## 🔍 3. View and label
+## 3. View and label
 
 ```bash
 uv run gaze-serve                 # API on http://127.0.0.1:8000
@@ -108,7 +101,7 @@ Alternatively, run `pnpm build` once in `web/`. After that, `gaze-serve` also ho
 | `label_blink`   | `true` eyes closed, `false` eyes open                                  |
 | `label_quality` | `0` good, `1` inaccurate, `2` wrong (per face detector)                |
 
-## 📊 4. Evaluate
+## 4. Evaluate
 
 ```bash
 uv run gaze-evaluate --config eval.yaml   # config optional, see eval.example.yaml
@@ -127,7 +120,7 @@ Graphs (PNG + PDF) and tables (CSV + LaTeX) are written to `data/plots/`:
 | `summary/`          | comparison of all face detector + gaze model combinations                                                  |
 | `tables/`           | `summary`, `cross_validation_folds`, `face_detection`, `blinks`                                            |
 
-## 🧪 Method and its limitations
+## Method and its limitations
 
 What the rework changes, and what is still a limitation:
 
@@ -141,7 +134,7 @@ What the rework changes, and what is still a limitation:
    - Sunglasses, night rides and extreme head rotations remain hard.
    - The display is assumed to lie in the camera plane (front camera, phone held upright).
 
-## 🧑‍💻 Development
+## Development
 
 ```bash
 uv sync --extra cpu --group dev
@@ -156,7 +149,7 @@ The CI (`.github/workflows/ci.yml`) runs the same checks. It skips dlib, because
 
 Environment variables: `GAZE_DATA_DIR`, `GAZE_ASSETS_DIR`, `GAZE_DATABASE` (default locations) and `GAZE_DEVICE` (e.g. `cpu` to force the CPU).
 
-## 📁 Repository structure
+## Repository structure
 
 | Path                               | Content                                                                    |
 | ---------------------------------- | -------------------------------------------------------------------------- |
