@@ -16,9 +16,11 @@ This repository contains the implementation and documentation of my diploma thes
 
 ## Screenshots
 
-![Visualizer](./thesis/images/debug.jpg)
-![Annotations](./thesis/images/evaluation/tool.jpg)
-![Example Video](./examples/example.gif)
+![Face landmarks and gaze vector on video 01](./examples/demo.gif)
+
+![Videos overview](./examples/visualizer_front_page.png)
+![Viewer with 3D scene, frame and timeline](./examples/visualizer_viewer.png)
+![Labeling tool](./examples/visualizer_labeling.png)
 
 ## How it works
 
@@ -119,6 +121,8 @@ Graphs (PNG + PDF) and tables (CSV + LaTeX) are written to `data/plots/`:
 | `cross_validation/` | leave-one-video-out F1/MCC per held-out video, confusion matrices, effect of temporal smoothing             |
 | `summary/`          | comparison of all face detector + gaze model combinations                                                  |
 | `tables/`           | `summary`, `cross_validation_folds`, `face_detection`, `blinks`                                            |
+
+![Timeline of video 01 with dlib + head-rotation](./examples/dlib_head-rotation.png)
 
 ## Method and its limitations
 
