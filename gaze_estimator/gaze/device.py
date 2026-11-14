@@ -1,3 +1,5 @@
+"""Torch device selection, overridable with the ``GAZE_DEVICE`` environment variable."""
+
 import os
 
 import torch
