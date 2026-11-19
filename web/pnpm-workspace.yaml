@@ -1,0 +1,8 @@
+# Supply chain hardening for pnpm (settings only, this is not a monorepo).
+# Only resolve versions that have been published for at least 28 days (in minutes). This also covers
+# transitive dependencies, which Renovate's minimumReleaseAge does not see during lock file maintenance.
+minimumReleaseAge: 40320
+# Never let a dependency switch from a trusted publisher / provenance to a weaker setup.
+trustPolicy: no-downgrade
+# Don't run dependency install scripts (pnpm 10 default, made explicit). Allowlist packages here if needed.
+onlyBuiltDependencies: []

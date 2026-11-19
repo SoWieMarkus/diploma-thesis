@@ -6,9 +6,9 @@
 FROM --platform=$BUILDPLATFORM node:26-alpine AS web
 WORKDIR /web
 # corepack is no longer bundled with the node images; install the pnpm version from package.json.
-COPY web/package.json web/pnpm-lock.yaml ./
-RUN npm install -g "$(node -p "require('./package.json').packageManager")"
-RUN pnpm install --frozen-lockfile
+COPY web/package.json web/pnpm-lock.yaml web/pnpm-workspace.yaml ./
+RUN npm install -g --ignore-scripts "$(node -p "require('./package.json').packageManager")"
+RUN pnpm install --frozen-lockfile --ignore-scripts
 COPY web/ ./
 RUN pnpm build
 
